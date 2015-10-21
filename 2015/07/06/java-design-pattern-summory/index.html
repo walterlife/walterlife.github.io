@@ -1,0 +1,310 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Java设计模式学习之概述篇 | Walter&#39;s Blog</title>
+  <meta name="author" content="Walter">
+  
+  <meta name="description" content="做一个文雅的程序员">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Java设计模式学习之概述篇"/>
+  <meta property="og:site_name" content="Walter&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?null";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Walter&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="所有文章归档">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="所有文档分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="所有文档标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">		
+			<h1> Java设计模式学习之概述篇</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+			
+
+	<!-- content -->
+	<div class="mypage">		
+	    <h2 id="设计模式_Overview">设计模式 Overview</h2><p>目前在现代语言开发中，设计模式是非常流行的,因为通常一种设计模式可以解决一种常见的开发问题。</p>
+<p>如果你使用设计模式，你可以获得以下好处:</p>
+<ol>
+<li>设计模式已经是由前人经验总结好的， 其解决方法是通过标准实践测试过的，因此这可以帮你节省很多时间</li>
+<li>设计模式是可复用的，这大大提升了软件的鲁棒性和可维护性</li>
+<li>同时设计模式是面向对象，通俗易懂的，这样可以任务交接团队间交流时省去很多时间</li>
+</ol>
+<p>设计模式总体上可以分为3大类:</p>
+<ol>
+<li>创造型模式</li>
+<li>结构型模式</li>
+<li>行为型模式</li>
+</ol>
+<a id="more"></a>
+<h3 id="创造型模式">创造型模式</h3><p>创造型模式提供了在特殊的场景下提供最佳的方式去实例化一个对象</p>
+<p>对于实例化对象，如果处理不当，往往会带来意料之外的问题。</p>
+<p>而创造型模式就是解决这类问题的，他通过使用不同的方式来实例化对象</p>
+<p>创造型模式包括：</p>
+<ol>
+<li>单例模式(Singleton Pattern)</li>
+<li>工厂模式(Factory Pattern)</li>
+<li>抽象工厂模式(Abstract Factory Pattern)</li>
+<li>生成器模式(Builder Pattern)</li>
+<li>原型模式(Prototype Pattern)</li>
+</ol>
+<h3 id="结构型模式">结构型模式</h3><p>结构型模式是用来提供不同的方式来创建一个类结构，比如说使用继承或者组合将一堆小的对象编程一个大的对象</p>
+<p>结构型模式包括：</p>
+<ol>
+<li>适配器模式(Adaptor Pattern)</li>
+<li>组合模式(Composite Pattern)</li>
+<li>代理模式(Proxy Pattern)</li>
+<li>亨元模式(Flyweight Pattern)</li>
+<li>门面模式(Facade Pattern)</li>
+<li>桥接模式(Bridge Pattern)</li>
+<li>装饰器模式(Decorator Pattern)</li>
+</ol>
+<h3 id="行为型模式">行为型模式</h3><p>行为型模式是用来实现对象间松耦合，从而实现更易于扩展</p>
+<p>行为型模式包括：</p>
+<ol>
+<li>模板方法模式(Template Method Pattern)</li>
+<li>中介者模式(Mediator Pattern)</li>
+<li>责任链模式(Chain Of Responsibility Pattern)</li>
+<li>观察者模式(Observer Pattern)</li>
+<li>策略模式(Strategy Pattern)</li>
+<li>命令模式(Command Pattern)</li>
+<li>状态模式(State Pattern)</li>
+<li>访问者模式(Visitor Pattern)</li>
+<li>中断模式(Interpreter Pattern)</li>
+<li>迭代器模式(Iterator Pattern)</li>
+<li>备忘录模式(Memento Pattern)</li>
+</ol>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2015/07/06/java-design-pattern-factory/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2015/07/05/java-design-pattern-singleton/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2015/07/06/java-design-pattern-summory/" data-title="Java设计模式学习之概述篇" data-url="http://yoursite.com/2015/07/06/java-design-pattern-summory/"></div>  
+  
+</section>
+
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	Jul 6 2015 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/java/">java<span>20</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/design-pattern/">design-pattern<span>13</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2015 Walter
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'walterlife' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

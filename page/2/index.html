@@ -1,0 +1,698 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 2 页 | Walter&#39;s Blog</title>
+  <meta name="author" content="Walter">
+  
+  <meta name="description" content="做一个文雅的程序员">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Walter&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?null";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Walter&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="所有文章归档">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="所有文档分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="所有文档标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 <div class="page-header">
+  <h1>一切因想像而美好</h1>
+</div>
+
+<div class="row page">
+
+	
+	<div class="col-md-9">
+	
+
+		<div class="slogan">
+      <i class="fa fa-heart"></i>
+      Welcome.
+</div>    
+
+		<div class="mypage">
+		
+		<!-- title and entry -->
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Sep 1 2015 </div>
+			<div class="article-title"><a href="/2015/09/01/Spring-Autowired-By-type-name-constructor-Autowired-and-Qualifer-注解例子/" >Spring Autowired By type,name,constructor,Autowired and Qualifer 注解例子</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <p>Spring Framework的主要特性之一是DI[依赖注入],而实现该方式主要通过配置spring bean的</p>
+<p>通常我们会在bean configuration file 中配置程序想要注入的bean 配置，也可以引用配置在其他 file中的bean[通过 ref 引用]。这种方法在需要注入很多bean的时候配置会显得比较繁锁</p>
+<p>所以spring提供了 autowired 机制，从而必须定义每一个bean</p>
+<p>目前有以下几种方式实现autowired:</p>
+<ol>
+<li><p>autowired byName, 这种方式在 service 中必须实现需要inject的成员变量的setter方法,<br>并bean 中配置的bean name 必须和成员变量相同</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- autowiring byName, bean name should be same as the property name --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">name</span>=<span class="value">"employeeServiceByName"</span> <span class="attribute">class</span>=<span class="value">"com.walterlife.springtest.service.EmployeeService"</span> <span class="attribute">autowire</span>=<span class="value">"byName"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>autowired byType, 该种方式下同一种 bean type 只能 配置一次</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- autowiring byType, there should be only one bean definition for the mapping --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">name</span>=<span class="value">"employeeServiceByType"</span> <span class="attribute">class</span>=<span class="value">"com.walterlife.springtest.service.EmployeeService"</span> <span class="attribute">autowire</span>=<span class="value">"byType"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>autowired by constructor, 和 byType类似，只是该种方式是通过构造函数进行注入的</p>
+</li>
+<li><p>autowired by @Autowired 注解, 使用该种方式，需要配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Enable Annotation based configuration --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">context:annotation-config</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>@Qualifer, 该注解用来表明@Autowired的参数指定的类型，本身需要带上injected 的bean name</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Autowired</span>(required=<span class="keyword">false</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">EmployeeAutowiredByConstructorService</span><span class="params">(@Qualifier(<span class="string">"employee"</span>)</span> Employee employee) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.employee = employee;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/09/01/Spring-Autowired-By-type-name-constructor-Autowired-and-Qualifer-注解例子/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Aug 25 2015 </div>
+			<div class="article-title"><a href="/2015/08/25/java-design-pattern-observer/" >Java设计模式学习之观察者模式</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <p>观察者模式是行为型模式中的一种。</p>
+<p>该模式用于：应用程序对某个对象状态变更感兴趣，并希望该对象状态在每次变更都能及时的收到通知。被观察的对象称为主题，观察这个对象的一堆对象称为观察者。</p>
+<p>在GOF中定义如下</p>
+<blockquote>
+<p>建立对象与对象之间的一对多关系, 当一个对象的状态发生变化时，依赖该对象的所有对象都收到通知并自动更新</p>
+</blockquote>
+<p>主题对象包含一堆观察者，时时刻刻装备等待着主题的状态变更，主题对象需要向应用程序提供增加和删除观察者, 以及当状态发生变化时通知观察者的接口</p>
+<p>观察者需要提供接口去设置自己感兴趣的观察对象(主题),以及能够使主题对象及时通知自己状态变更的接口</p>
+<p>在Java的世界中，该模式应用还是挺广泛的。<br>JMS(Java Message Service)  将观察者模式和中介者模式结合在一起，从而使应用程序之间互相订阅和发布消息</p>
+<p>MVC(Model-View-Controller) 框架中，模型属于主题，视图属于观察者，在模型发生变化时，视图立刻收到通知从而更改相关的状态</p>
+<p>Java标准库中有提供了 java.util.Observable(主题)类和Java.util.Observer(观察者)接口,来实现生产者模式</p>
+
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/08/25/java-design-pattern-observer/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Aug 22 2015 </div>
+			<div class="article-title"><a href="/2015/08/22/java-design-pattern-prototye/" >Java设计模式学习之原型模式</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <p>原型模式是创造型模式的一种，因此他提供了对象创建的机制</p>
+<p>该种模式主要用于：当你需要创建某个对象时，而刚好已经存在与该对象类似的对象，但是同时<br>不同用已经存在的对象，因为你也想对新的对象做某些定制，此时你就可以使用原型模式咯</p>
+<p>Java中是实现对象的clone 方法来实现原型模式的啦</p>
+<p>下面这个例子中，我们已经存在一个对象，该对象中的数据需要load from db,此时程序中需要多次对这些数据进行修改，且相互不影响, 此时我们使用原型模式，先创建一个对象，再将对象clone 成多份，避免了每创建一个对象就重新 load data from db</p>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/08/22/java-design-pattern-prototye/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jul 30 2015 </div>
+			<div class="article-title"><a href="/2015/07/30/java-servlet-summary/" >Java Servlet 知识点整理</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <h2 id="前言">前言</h2><ul>
+<li>Servlets 是一些实现java Servlet API 的类，用于实现http的请求和响应。</li>
+<li>一个Servlet类必须被部署到Servlet容器才可用，如tomcat</li>
+<li>像jsp，jsf都最终会被转换为Servlet类</li>
+</ul>
+<h2 id="第一个_Servlet_例子">第一个 Servlet 例子</h2><ul>
+<li>下面是一个很简单的例子，但是可以了解到servlet的原理所在</li>
+<li>使用mvn创建一个 webapp 项目，在pom.xml添加如下依赖<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>servlet-api<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>2.5<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="title">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/07/30/java-servlet-summary/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jul 21 2015 </div>
+			<div class="article-title"><a href="/2015/07/21/java-thread-summary/" >Java Thread 相关知识点</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <h2 id="1-_start_与_run_的区别">1. start 与 run 的区别</h2><ul>
+<li>start 会新创建一个线程，并且执行重新的run方法中的代码</li>
+<li>run 不会新创建一个线程，而在当前线程内执行 run方法内的代码</li>
+<li>start 方法不能连续调用，否则会抛出 IllegalStateException</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.javacore;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.Thread;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StartVsRunCall</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String[] args )</span> </span>&#123; </span><br><span class="line">        Thread startThread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Task(<span class="string">"start"</span>), <span class="string">"startThread"</span>); </span><br><span class="line">        Thread runThread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Task(<span class="string">"run"</span>), <span class="string">"runThread"</span>);                                                                                                                         </span><br><span class="line"></span><br><span class="line">        startThread.start();</span><br><span class="line">        runThread.run();</span><br><span class="line">    &#125;   </span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Task</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> String caller;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Task</span><span class="params">(String caller)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.caller = caller;</span><br><span class="line">        &#125;   </span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"caller: "</span> + <span class="keyword">this</span>.caller + <span class="string">" and code exectue in thread "</span> + Thread.currentThread().getName());</span><br><span class="line">        &#125;   </span><br><span class="line">    &#125;   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Output:</span></span><br><span class="line">caller: run and code exectue in thread main</span><br><span class="line">caller: start and code exectue in thread startThread</span><br></pre></td></tr></table></figure>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/07/21/java-thread-summary/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jul 20 2015 </div>
+			<div class="article-title"><a href="/2015/07/20/java-struts2-summary/" >Java Struts 相关知识点</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <h2 id="1-_改变_Struts_action_url_的m默认后缀">1. 改变 Struts action url 的m默认后缀</h2><h2 id="org-apache-struts2-dispatcher-FilterDispatcher_与_org-apache-struts2-dispatcher-ng-filter-StrutsPrepareAndExecuteFilter_的区别">org.apache.struts2.dispatcher.FilterDispatcher 与 org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter 的区别</h2><ul>
+<li>FilterDispatcher 在Struts2.1.3之前使用</li>
+<li>StrutsPrepareAndExecuteFilter 在 2.1.3 后推荐使用</li>
+</ul>
+
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/07/20/java-struts2-summary/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jul 20 2015 </div>
+			<div class="article-title"><a href="/2015/07/20/never-make-the-five-mistakes-for-devs/" >永远不要再犯的 5 个编程错误</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <h2 id="说明">说明</h2><p>本文转载自微信公众号文章 <a href="http://mp.weixin.qq.com/s?__biz=MjM5OTA1MDUyMA==&amp;mid=209343220&amp;idx=2&amp;sn=bd46e2355bf4184672ca03a3c019476a&amp;scene=1#rd">http://mp.weixin.qq.com/s?__biz=MjM5OTA1MDUyMA==&amp;mid=209343220&amp;idx=2&amp;sn=bd46e2355bf4184672ca03a3c019476a&amp;scene=1#rd</a><br>个人觉得比较实用，故转载于博客中</p>
+<h2 id="前言">前言</h2><pre><code>当你开始成为一个程序员的时候，在编程的时候很容易陷入下面所述的一些坏习惯。
+作为一名程序员，犯错误不可避免，这是你学习编程课程中的一部分。在你的职业生涯中你会犯很多错误 – 有的特别、有的普遍 – 通过这些错误你可以学习如何避免在将来再犯同样的错误。
+但是如果你是一个初学者，你犯的错误可能会比其他人更频繁。那么如何才能避免大部分程序员每天都犯的这些普遍的错误呢？
+想要避免错误，就要对它有所了解。这也是为什么我要和大家分享一些在我们的程序员生涯中阻碍我们成长的普遍错误。
+在开始之前，你可能想知道为什么我知道这些是错误，不是最佳的方法？
+
+有一个简单的回答就是 – 在我的职业生涯中，所有这些情况我都遇到过。有些情况经常遇到，有些只遇到过几次。每次犯错之后，我都后悔莫及。
+最坏的情况是我根本你不知道我在做错的东西。一旦我意识到我在做错事，我就开始避免这些失误。至少，我现在写的代码比以前写的要好多了。
+现在你们也可以避免这些错误。首先要知道你现在在做的是错误的。我知道大部门程序员都不会做任何错事，因为他们认为那是正确的，所以他们的行为会对程序和程序员的职业成长产生不利影响。
+
+绝大部分的不良编程习惯都源于无知，而没有任何其他原因。
+
+要成为一个好的程序员，我们必须一个一个的去掉这些无知。这也是那些好的编程书籍所尽力展示给我们的。
+
+我们犯这些错误的部分原因在于它们确实完成了工作。并不是我们要做的 – 让我们的程序运行起来，完成我们日常的工作。
+
+但是让什么好用只是你工作的一部分。如果想要让你的应用程序好用，你将不得不定期更新，修复任何新的<span class="keyword">bug，这些将有可能变得很频繁。这样一来能让你的工作变得比较容易的方法就是遵循好的编程实践。另外，即使你在小型程序中能够摆脱这些错误，在大型程序中你也可能碰到他们。
+</span>
+如果你仍然犯这些错误，可能你的程序依然正常运行，能够完成需要的任务，但是它会变得易出<span class="keyword">bug，充满低效率的代码，难于维护。并且，当你很长时间后再来看它的代码的时候，你会发现代码很难理解。
+</span>
+作为程序员，我们的工作不仅仅是让我们的程序工作，而让用户来处理<span class="keyword">bug。我们的工作是确保用户即使输入错误也不会得到意外的结果。所以要创建高品质的应用程序，请确保你不会在编程的时候犯下面的这些普遍的错误：</span>
+</code></pre>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/07/20/never-make-the-five-mistakes-for-devs/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jul 19 2015 </div>
+			<div class="article-title"><a href="/2015/07/19/java-string-summary/" >Java String 相关知识点</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <p>String 类 在java中是非常特殊的，而且也是经常使用的，本文所讲的是String类要熟知的知识点</p>
+<h2 id="1-_String_并不是以_\0_结束的">1. String 并不是以 \0 结束的</h2><ul>
+<li>并不像 c/c++ 那样，string 是以 \0 结尾的，java 中String是对象存储的，底层数据存储在 char[]中，你可以使用 charToArray来获得String 的char array</li>
+</ul>
+<h2 id="2-_String_在_java中_是_f不可变的并且是_inal_class">2. String 在 java中 是 f不可变的并且是 inal class</h2><ul>
+<li>String是不可变的，意味着对象一旦创建你就不可以改变其值[重新赋值实际上是重新创建新的对象]。像toLowerCase, toUpperCase 这类操作都会返回一个新的对象。</li>
+<li>String 的返回是不能被重写的</li>
+<li>对于为什么 String 会被定义为 <a href="http://javarevisited.blogspot.sg/2010/10/why-string-is-immutable-in-java.html">final class 或是 不可变的</a>，可以点击链接阅读</li>
+</ul>
+<h2 id="3-_String字符串是存储在_字符串池中的">3. String字符串是存储在 字符串池中的</h2><ul>
+<li><p>字符串常量(eg: “walterblog”)是存储在一块独立的内存的，字符串池.每次你使用 字符串常量来初始化String 对象时, JVM 都会去 String Pool 检查是否有相同的字符串常量，有则返回没有则创建新的内存并放入字符串池。如果使用 new String 来创建对象的话，JVM不会检查 String Pool 的。</p>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/07/19/java-string-summary/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jul 18 2015 </div>
+			<div class="article-title"><a href="/2015/07/18/maven-webapp-deploy-to-tomcat/" >maven webapp 项目部署至tomcat</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <p>在本文中，我们使用Apache Tomcat Maven plugin，将maven webapp 项目的war 文件自动部署至 Apache Tomcat下,作者的环境如下:</p>
+<ul>
+<li>Apache Maven 2.1.1</li>
+<li>Apache Tomcat Maven Plugin</li>
+<li>JDK 1.7</li>
+<li>Apache Tomcat 7</li>
+<li>OS: Debian 7</li>
+</ul>
+<h2 id="1-_在_Tomcat_中创建用户">1. 在 Tomcat 中创建用户</h2><ul>
+<li>在 {tomcat installed path}/conf/tomcat-users.xml 中配置如下信息<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">tomcat-users</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">role</span> <span class="attribute">rolename</span>=<span class="value">"manager"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">role</span> <span class="attribute">rolename</span>=<span class="value">"admin"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">role</span> <span class="attribute">rolename</span>=<span class="value">"manager-gui"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">role</span> <span class="attribute">rolename</span>=<span class="value">"manager-script"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">user</span> <span class="attribute">username</span>=<span class="value">"admin"</span> <span class="attribute">password</span>=<span class="value">"admin"</span> <span class="attribute">roles</span>=<span class="value">"admin, manager, manager-gui, manager-script"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">tomcat-users</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="2-_在_Maven_中创建用户">2. 在 Maven 中创建用户</h2><ul>
+<li>在 /etc/conf/maven/setting.xml[linux环境] 中配置如下信息<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">server</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">id</span>&gt;</span>tomcat<span class="tag">&lt;/<span class="title">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="title">username</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">password</span>&gt;</span>admin<span class="tag">&lt;/<span class="title">password</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">server</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/07/18/maven-webapp-deploy-to-tomcat/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jul 16 2015 </div>
+			<div class="article-title"><a href="/2015/07/16/java-spring-di-method/" >Spring学习之Spring DI 方式</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <p>在 Spring 框架中，依赖注入机制(DI)多用于对象间的依赖，也称之为IOC(控制反转)<br>大致意思是：程序在运行的时候，由外部容器动态的将依赖对象注入到组件中，比如当Spring 容器启动时，spring开始进行容器初始化，创建并管理bean对象，以及销毁他。所以我们不需要自己编写代码来创建bean对象，可以直接从spring容器中获取，此时控制权就发生转移，由应用程序转移到外部容器，即控制反转。</p>
+<p>主要实现方式有两种:</p>
+<ul>
+<li>setter 方法注入</li>
+<li>构造函数注入</li>
+</ul>
+<h2 id="setter_方法注入">setter 方法注入</h2><ul>
+<li>该方法目前在Spring中最为常用</li>
+<li>例子</li>
+</ul>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/07/16/java-spring-di-method/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+
+		</div>
+
+		<!-- pagination -->
+		<div>
+  		<center>
+		<div class="pagination">
+<ul class="pagination">
+	 
+		
+    	<li class="prev"><a href="/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i> 上一页</a></li>
+  		
+
+        <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+
+		
+		   <li class="next"> <a href="/page/3/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a> </li>          
+        
+	
+</ul>
+</div>
+
+  		</center>
+		</div>
+
+		
+		
+	</div> <!-- col-md-9 -->
+
+	
+		<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div class="form-group has-success has-feedback">
+    <form class="site-search-form">
+        <input type="text" id="st-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control" />
+    </form>
+  </div>  
+
+
+
+		
+			
+	<div class="widget">
+		<h4>分类</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/categories/code/">code<span>1</span></a></li>
+		
+			<li><a href="/categories/cpp/">cpp<span>2</span></a></li>
+		
+			<li><a href="/categories/db/">db<span>1</span></a></li>
+		
+			<li><a href="/categories/java/">java<span>20</span></a></li>
+		
+			<li><a href="/categories/summary/">summary<span>7</span></a></li>
+		
+			<li><a href="/categories/tools/">tools<span>2</span></a></li>
+		
+		</ul>
+	</div>
+
+		
+			
+	<div class="widget">
+		<h4>标签云</h4>
+		<ul class="tag_box inline list-unstyled">		
+		
+			<li><a href="/tags/core-java/">core-java<span>6</span></a></li>
+		
+			<li><a href="/tags/work/">work<span>1</span></a></li>
+		
+			<li><a href="/tags/design-pattern/">design-pattern<span>13</span></a></li>
+		
+			<li><a href="/tags/java-concurrent/">java-concurrent<span>1</span></a></li>
+		
+			<li><a href="/tags/struts2/">struts2<span>1</span></a></li>
+		
+			<li><a href="/tags/java/">java<span>2</span></a></li>
+		
+			<li><a href="/tags/java-core/">java-core<span>2</span></a></li>
+		
+			<li><a href="/tags/servlet/">servlet<span>1</span></a></li>
+		
+			<li><a href="/tags/bash/">bash<span>1</span></a></li>
+		
+			<li><a href="/tags/interview/">interview<span>3</span></a></li>
+		
+			<li><a href="/tags/cpp/">cpp<span>2</span></a></li>
+		
+			<li><a href="/tags/mongodb/">mongodb<span>1</span></a></li>
+		
+			<li><a href="/tags/netty/">netty<span>1</span></a></li>
+		
+			<li><a href="/tags/maven/">maven<span>2</span></a></li>
+		
+			<li><a href="/tags/spring/">spring<span>2</span></a></li>
+		
+			<li><a href="/tags/linux/">linux<span>2</span></a></li>
+		
+		 
+		</ul>
+	</div>
+
+
+		
+			
+<div class="widget">
+  <h4>最新文章</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2015/10/21/maven-use-summary/" ><i class="fa fa-file-o"></i>maven_use_summary...</a>
+      </li>
+    
+      <li>
+        <a href="/2015/09/13/netty-server-learn/" ><i class="fa fa-file-o"></i>菜鸟学习系列--netty服务器启动流程分析...</a>
+      </li>
+    
+      <li>
+        <a href="/2015/09/12/java-blocking-queue-learn/" ><i class="fa fa-file-o"></i>java-blocking-queue-learn...</a>
+      </li>
+    
+      <li>
+        <a href="/2015/09/11/java-volatile-keyword-learn/" ><i class="fa fa-file-o"></i>java-volatile-keyword-learn...</a>
+      </li>
+    
+      <li>
+        <a href="/2015/09/11/java-concurrency-multithreading-learn/" ><i class="fa fa-file-o"></i>Java并发编程学习...</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>链接</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class=""></i><a href="https://github.com/wzpan/freemind/" title="Freemind's Github repository." target="_blank"]);">Freemind</a></li>
+	
+		<li><i class=""></i><a href="http://www.github.com/walterlife" title="My Github account." target="_blank"]);">Github</a></li>
+	
+		<li><i class=""></i><a href="http://www.zhihu.com/people/walterlife" title="My zhihu account." target="_blank"]);">知乎</a></li>
+	
+		<li><i class=""></i><a href="http://book.douban.com/people/walterlife/" title="My douban account." target="_blank"]);">豆瓣</a></li>
+	
+	</ul>
+</div>
+
+
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
+
+	
+	
+</div> <!-- row-fluid -->
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2015 Walter
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'walterlife' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

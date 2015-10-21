@@ -1,0 +1,268 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Java设计模式学习之原型模式 | Walter&#39;s Blog</title>
+  <meta name="author" content="Walter">
+  
+  <meta name="description" content="做一个文雅的程序员">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Java设计模式学习之原型模式"/>
+  <meta property="og:site_name" content="Walter&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?null";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Walter&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="所有文章归档">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="所有文档分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="所有文档标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">		
+			<h1> Java设计模式学习之原型模式</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+			
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>原型模式是创造型模式的一种，因此他提供了对象创建的机制</p>
+<p>该种模式主要用于：当你需要创建某个对象时，而刚好已经存在与该对象类似的对象，但是同时<br>不同用已经存在的对象，因为你也想对新的对象做某些定制，此时你就可以使用原型模式咯</p>
+<p>Java中是实现对象的clone 方法来实现原型模式的啦</p>
+<p>下面这个例子中，我们已经存在一个对象，该对象中的数据需要load from db,此时程序中需要多次对这些数据进行修改，且相互不影响, 此时我们使用原型模式，先创建一个对象，再将对象clone 成多份，避免了每创建一个对象就重新 load data from db</p>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.dp.ProtoTypeDP;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.Logger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Employees</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> Logger logger = Logger.getLogger(Employees.class.getName());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; empList;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Employees</span><span class="params">(List&lt;String&gt; empList)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(empList == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>.empList = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">            logger.warn(<span class="string">"empList is null!!!"</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.empList = empList;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Employees</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.empList = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getEmpList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.empList;</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(empList == <span class="keyword">null</span>) &#123;</span><br><span class="line">            empList = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">            logger.warn(<span class="string">"empList is null"</span>);</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="comment">// load data from db</span></span><br><span class="line">        empList.add(<span class="string">"walter"</span>);</span><br><span class="line">        empList.add(<span class="string">"hello"</span>);</span><br><span class="line">        empList.add(<span class="string">"world"</span>);</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        List&lt;String&gt; tmp = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(empList == <span class="keyword">null</span>) &#123;</span><br><span class="line">            logger.warn(<span class="string">"empList is null"</span>);</span><br><span class="line">            <span class="keyword">return</span> tmp;</span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(String emp: empList) &#123;</span><br><span class="line">            tmp.add(emp);</span><br><span class="line">        &#125; </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Employees(tmp);</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实现 clone 方法,并且是对象的深拷贝</p>
+<p>测试代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.dp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.Level;</span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.Logger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.walterlife.dp.ProtoTypeDP.Employees;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> Logger logger = Logger.getLogger(App.class.getName());</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String[] args )</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        logger.setLevel((Level)(Level.DEBUG));</span><br><span class="line"></span><br><span class="line">        Employees emp = <span class="keyword">new</span> Employees();</span><br><span class="line">        emp.loadData();</span><br><span class="line">        logger.info(<span class="string">"emp emps: "</span> + emp.getEmpList());</span><br><span class="line"></span><br><span class="line">        Employees empNew;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            empNew = (Employees) emp.clone();</span><br><span class="line">            List&lt;String&gt; list = empNew.getEmpList();</span><br><span class="line">            <span class="keyword">if</span>(list != <span class="keyword">null</span>) &#123;</span><br><span class="line">                list.add(<span class="string">"hehe"</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                logger.error(<span class="string">"empNew-list is null!!!"</span>);</span><br><span class="line">            &#125; </span><br><span class="line">            logger.info(<span class="string">"empNew emps: "</span> + empNew.getEmpList());</span><br><span class="line"></span><br><span class="line">            Employees empNew1 = (Employees)emp.clone();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(empNew1 != <span class="keyword">null</span>) &#123;</span><br><span class="line">                List&lt;String&gt; list1 = empNew1.getEmpList();</span><br><span class="line">                <span class="keyword">if</span>(list1 != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">if</span>(list1.indexOf(<span class="string">"hello"</span>) != -<span class="number">1</span>) &#123;</span><br><span class="line">                        list1.remove(<span class="string">"hello"</span>);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        logger.warn(<span class="string">"key hello not exist!!"</span>);</span><br><span class="line">                    &#125; </span><br><span class="line">                    logger.info(<span class="string">"empNew1 emps: "</span> + empNew1.getEmpList());</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    logger.error(<span class="string">"empNew1-list is null!!!"</span>);</span><br><span class="line">                &#125; </span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                logger.error(<span class="string">"empNew1 is null!!!"</span>);</span><br><span class="line">            &#125; </span><br><span class="line">        &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行结果<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2015</span>-<span class="number">08</span>-<span class="number">23</span> <span class="number">10</span>:<span class="number">52</span>:<span class="number">58</span> INFO  com.walterlife.dp.App main:<span class="number">19</span> -&gt; emp emps: [walter, hello, world]</span><br><span class="line"><span class="number">2015</span>-<span class="number">08</span>-<span class="number">23</span> <span class="number">10</span>:<span class="number">52</span>:<span class="number">58</span> INFO  com.walterlife.dp.App main:<span class="number">31</span> -&gt; empNew emps: [walter, hello, world, hehe]</span><br><span class="line"><span class="number">2015</span>-<span class="number">08</span>-<span class="number">23</span> <span class="number">10</span>:<span class="number">52</span>:<span class="number">58</span> INFO  com.walterlife.dp.App main:<span class="number">46</span> -&gt; empNew1 emps: [walter, world]</span><br></pre></td></tr></table></figure></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2015/08/25/java-design-pattern-observer/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2015/07/30/java-servlet-summary/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2015/08/22/java-design-pattern-prototye/" data-title="Java设计模式学习之原型模式" data-url="http://yoursite.com/2015/08/22/java-design-pattern-prototye/"></div>  
+  
+</section>
+
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	Aug 22 2015 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/java/">java<span>20</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/design-pattern/">design-pattern<span>13</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2015 Walter
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'walterlife' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

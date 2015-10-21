@@ -1,0 +1,314 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Java String 相关知识点 | Walter&#39;s Blog</title>
+  <meta name="author" content="Walter">
+  
+  <meta name="description" content="做一个文雅的程序员">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Java String 相关知识点"/>
+  <meta property="og:site_name" content="Walter&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?null";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Walter&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="所有文章归档">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="所有文档分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="所有文档标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">		
+			<h1> Java String 相关知识点</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+			
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>String 类 在java中是非常特殊的，而且也是经常使用的，本文所讲的是String类要熟知的知识点</p>
+<h2 id="1-_String_并不是以_\0_结束的">1. String 并不是以 \0 结束的</h2><ul>
+<li>并不像 c/c++ 那样，string 是以 \0 结尾的，java 中String是对象存储的，底层数据存储在 char[]中，你可以使用 charToArray来获得String 的char array</li>
+</ul>
+<h2 id="2-_String_在_java中_是_f不可变的并且是_inal_class">2. String 在 java中 是 f不可变的并且是 inal class</h2><ul>
+<li>String是不可变的，意味着对象一旦创建你就不可以改变其值[重新赋值实际上是重新创建新的对象]。像toLowerCase, toUpperCase 这类操作都会返回一个新的对象。</li>
+<li>String 的返回是不能被重写的</li>
+<li>对于为什么 String 会被定义为 <a href="http://javarevisited.blogspot.sg/2010/10/why-string-is-immutable-in-java.html" target="_blank" rel="external">final class 或是 不可变的</a>，可以点击链接阅读</li>
+</ul>
+<h2 id="3-_String字符串是存储在_字符串池中的">3. String字符串是存储在 字符串池中的</h2><ul>
+<li><p>字符串常量(eg: “walterblog”)是存储在一块独立的内存的，字符串池.每次你使用 字符串常量来初始化String 对象时, JVM 都会去 String Pool 检查是否有相同的字符串常量，有则返回没有则创建新的内存并放入字符串池。如果使用 new String 来创建对象的话，JVM不会检查 String Pool 的。</p>
+<a id="more"></a>
+</li>
+<li><p>以下代码可以更好的理解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">String name = <span class="string">"Scala"</span>; <span class="comment">//1st String object</span></span><br><span class="line">String name_1 = <span class="string">"Scala"</span>; <span class="comment">//same object referenced by name variable</span></span><br><span class="line">String name_2 = <span class="keyword">new</span> String(<span class="string">"Scala"</span>); <span class="comment">//different String object</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//this will return true</span></span><br><span class="line"><span class="keyword">if</span>(name==name_1)&#123;</span><br><span class="line">    System.out.println(<span class="string">"both name and name_1 is pointing to same string object"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//this will return false</span></span><br><span class="line"><span class="keyword">if</span>(name==name_2)&#123;</span><br><span class="line">    System.out.println(<span class="string">"both name and name_2 is pointing to same string object"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// output</span></span><br><span class="line">both name and name_1 is pointing to same string object</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当然你可以使 new String 创建的对象放入到 String Pool中，使用 java.lang.String.inter() 方法可以实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">String A = <span class="keyword">new</span> String(<span class="string">"abc"</span>).intern();</span><br><span class="line">String B = <span class="string">"abc"</span>;</span><br><span class="line">System.out.println(A == B);</span><br><span class="line"><span class="comment">// output</span></span><br><span class="line"><span class="keyword">true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="4-_使用_equals_函数来比较两个String_object">4. 使用 equals 函数来比较两个String object</h2><ul>
+<li>String 中的equals 是重写Object类的，是比较对象的内容是否相等，和字符大小写，顺序相关的。</li>
+</ul>
+<h2 id="5-_使用indexof,_lastIndexof,_matchs,_startsWith,_endsWith查询字符子串,或者匹配字符串">5. 使用indexof, lastIndexof, matchs, startsWith, endsWith查询字符子串,或者匹配字符串</h2><ul>
+<li>indexof, lastIndexof当不存在子串时，返回 -1</li>
+<li>matchs是使用正则表达式来匹配字符串的，<a href="http://javarevisited.blogspot.com/2012/10/regular-expression-example-in-java-to-check-String-number.html" target="_blank" rel="external">Pattern 类</a> 更加强大<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">String str = <span class="string">"Java is best programming language"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(str.indexOf(<span class="string">"Java"</span>) != -<span class="number">1</span>)&#123;</span><br><span class="line">         System.out.println(<span class="string">"String contains Java at index :"</span> + str.indexOf(<span class="string">"Java"</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// J.* 表示字符串必须以 J 开头，而 J* 则表示字符串不一定是以J开头的</span></span><br><span class="line"><span class="keyword">if</span>(str.matches(<span class="string">"J.*"</span>))&#123;</span><br><span class="line">         System.out.println(<span class="string">"String Starts with J"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">str =<span class="string">"Do you like Java ME or Java EE"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(str.lastIndexOf(<span class="string">"Java"</span>) != -<span class="number">1</span>)&#123;</span><br><span class="line">          System.out.println(<span class="string">"String contains Java lastly at: "</span> + str.lastIndexOf(<span class="string">"Java"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="6-_使用substring_获得原字符串的子串">6. 使用substring 获得原字符串的子串</h2><h2 id="7-_使用_+_运算符来连接字符串">7. 使用 + 运算符来连接字符串</h2><h2 id="8-_使用_trim()_函数来去除字符串的首尾的空白字符">8. 使用 trim() 函数来去除字符串的首尾的空白字符</h2><ul>
+<li>String 提供 trim() 方法来去除字符串的首尾空白字符，如果没有，则返回原来的字符串，否则返回新的字符串。</li>
+<li>除了trim(),还有 replace(), replaceAll()来替换原有字符换的某些子字符串，同样可以使用正则表达式, replaceAll(‘ ‘, ‘’), 可以用来去除字符串中所有的空白字符</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String a = <span class="string">" df ff  "</span>;</span><br><span class="line">String b = a.trim(); <span class="comment">//b = "df ff"</span></span><br></pre></td></tr></table></figure>
+<h2 id="9-split_String_指定split_字符串分割字符串，可以使用正则表达式">9.split String 指定split 字符串分割字符串，可以使用正则表达式</h2><ul>
+<li>指定 分割字符串 将String 分割成 String 数组<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String a = <span class="string">"a,b,c,d"</span>;</span><br><span class="line">String[] b = a.split(<span class="string">","</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="10-不要将重要的数据(比如密码)存储在String_中">10.不要将重要的数据(比如密码)存储在String 中</h2><h2 id="11-_equals_使用">11. equals 使用</h2><ul>
+<li>使用 equals 时 最好如下使用<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String a;</span><br><span class="line"><span class="string">"abc"</span>.equals(a); <span class="comment">//这样a 如果 null 则不会抛出 NullPointExeption 异常，更加健壮</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="12-_StringBuffer_vs_StringBuilder">12. StringBuffer vs StringBuilder</h2><ul>
+<li>StringBuffer 是线程安全和可变的</li>
+<li>StringBuilder 是线程不安全和可变</li>
+</ul>
+<h2 id="13-_String_为什么是不可变的">13. String 为什么是不可变的</h2><ul>
+<li>String 类型非常常用的，比如数据库连接url，文件名等，若是可变的话，则如果在外部更改，则会变的很不安全</li>
+<li>在多线程环境下，String 的不可变特性对于多线程共享变量非常有用</li>
+<li>HashMap等关联性容器，用String作key非常常见，如果String是可变的话，则key插入前的hashCode 是一个值在插入后，String值变了，则hashCode 的值又是另一个了，这样每一次获取value时，hashCode都会重新计算。如果是不可变的，则可以缓存hashCode的值，只计算一次，这样可以加快元素的访问速度</li>
+<li>当然还有其他原因 -_-</li>
+</ul>
+<h2 id="14-_使用_System-out-printf_代替_System-out-println">14. 使用 System.out.printf 代替 System.out.println</h2><ul>
+<li>System.out.printf 可以格式字符串，用法类似C 语言中的 printf<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.printf(<span class="string">"%s-%06d"</span>, <span class="string">"Hello"</span>, <span class="string">"2015"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2015/07/20/never-make-the-five-mistakes-for-devs/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2015/07/18/maven-webapp-deploy-to-tomcat/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2015/07/19/java-string-summary/" data-title="Java String 相关知识点" data-url="http://yoursite.com/2015/07/19/java-string-summary/"></div>  
+  
+</section>
+
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	Jul 19 2015 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/summary/">summary<span>7</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/core-java/">core-java<span>6</span></a></li> <li><a href="/tags/interview/">interview<span>3</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2015 Walter
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'walterlife' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

@@ -1,0 +1,323 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>bash使用小结 | Walter&#39;s Blog</title>
+  <meta name="author" content="Walter">
+  
+  <meta name="description" content="做一个文雅的程序员">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="bash使用小结"/>
+  <meta property="og:site_name" content="Walter&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?null";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Walter&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="所有文章归档">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="所有文档分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="所有文档标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">		
+			<h1> bash使用小结</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+			
+
+	<!-- content -->
+	<div class="mypage">		
+	    <h2 id="说明">说明</h2><p>以下记录是平时工作中bash 相关使用的点滴记录，会持续更新</p>
+<h2 id="bash_中使用数组">bash 中使用数组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sites=(&#34;www.a.com www.b.com www.c.com www.d.com&#34; &#34;www.e.cn www.f.cn&#34;)   &#10;n_sites=$&#123;#sites[*]&#125; #&#33719;&#21462;&#19968;&#32500;sites&#30340;&#25968;&#32452;&#38271;&#24230;   &#10;for ((i=0;i&#60;$n_sites;i++))&#10;do   &#10;    inner_sites=($&#123;sites[$i]&#125;) #&#23558;&#19968;&#32500;sites&#23383;&#31526;&#20018;&#36171;&#20540;&#21040;&#25968;&#32452;   &#10;    n_inner_sites=$&#123;#inner_sites[*]&#125; #&#33719;&#21462;&#20108;&#32500;sites&#30340;&#25968;&#32452;&#38271;&#24230;   &#10;    for ((j=0;j&#60;$n_inner_sites;j++));   &#10;    do       &#10;        echo $&#123;inner_sites[$j]&#125; #&#22238;&#26174;site   &#10;    done   &#10;done</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="find命令使用小结">find命令使用小结</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -name &#34;name&#34; -exec cp &#123;&#125; \;  &#10;find &#32467;&#21512; -exec, grep&#20351;&#29992;  &#10;find .(path) -name &#34;name&#34; -exec grep &#34;part&#34; &#123;&#125; \;  &#10;find &#32467;&#21512; xargs tar &#32467;&#21512;&#20351;&#29992;  &#10;find . -name &#34;name&#34; | xargs tar -cvf tar_name.tar.gz</span><br></pre></td></tr></table></figure>
+<h2 id="解决文件名是空格的问题">解决文件名是空格的问题</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -name &#34;name&#34; -print0 | xargs -0 tar -cvf tar_name.tar.gz</span><br></pre></td></tr></table></figure>
+<h2 id="date">date</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date +&#39;%Y-%m-%d %H:%M:%S&#39;  &#10;date -d &#39;time&#39; +%s</span><br></pre></td></tr></table></figure>
+<h2 id="top">top</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top -b &#20197;&#25991;&#26412;&#26041;&#24335;(&#19981;&#21152;&#65292;&#21017;&#20889;&#20837;&#21040;&#25991;&#26412;&#20013;&#20250;&#20986;&#29616;&#21307;&#30103;&#20043;&#22806;&#30340;&#23383;&#31526;)  &#10;top -n num top &#21482;&#36816;&#34892; num &#27425;</span><br></pre></td></tr></table></figure>
+<h2 id="uptime">uptime</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uptime &#21015;&#20986;cpu&#24179;&#22343; &#36127;&#36733;&#22343;&#34913; &#31561;&#20215;&#20110; cat /proc/loadavg  &#10;mysql &#22810;&#38480;&#23450;&#26465;&#20214;  &#10;where condition and condition  &#10;mysql limit m, n &#26159;&#25351;&#35760;&#24405;m&#22788; &#21521;&#21518;&#26597;&#25214; n&#26465;&#35760;&#24405;</span><br></pre></td></tr></table></figure>
+<h2 id="crontab_实现秒级监控">crontab 实现秒级监控</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1. \* \* \* \* \* /bin/date  &#10;2. \* \* \* \* \* sleep 20; /bin/date  &#10;3. \* \* \* \* \* sleep 40; /bin/date</span><br></pre></td></tr></table></figure>
+<h2 id="virtual_box_安装增强功能">virtual box 安装增强功能</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#21482;&#35201;&#21152;virtual box &#25552;&#20379;&#30340;ISO &#21152;&#36733;&#21040; &#31995;&#32479;&#21363;&#21487; &#65292;&#36827;&#20837;&#31995;&#32479; /media &#36827;&#34892;&#23433;&#35013;&#21363;&#21487;</span><br></pre></td></tr></table></figure>
+<h2 id="nohup">nohup</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup shell_script &#38; &#22987;&#32456;&#22312;&#21518;&#21488;&#36816;&#34892;&#31243;&#24207;&#29992;&#25143;&#30340;&#23494;&#30721;</span><br></pre></td></tr></table></figure>
+<h2 id="usermod_更改用户名(不能修改当前用户)">usermod 更改用户名(不能修改当前用户)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod -Inewuser -d /home/newuser -m olduser  &#10;&#21487;&#20197;&#20351;&#29992;root&#20462;&#25913; /etc/passwd &#28982;&#21518;&#20462;&#25913;</span><br></pre></td></tr></table></figure>
+<h2 id="shell_中printf_使用">shell 中printf 使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printf &#34;%s,%s&#34; str1 str2 (&#21464;&#37327;&#20043;&#38388;&#21487;&#20197;&#38656;&#35201;&#31354;&#26684;&#65292;&#26684;&#24335;&#20018;&#20043;&#21069;&#19981;&#38656;&#35201;&#31354;&#26684;</span><br></pre></td></tr></table></figure>
+<h2 id="awk_中分隔符的指定">awk 中分隔符的指定</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FS=&#34;[sp1sp2]&#34; (&#20998;&#38548;&#31526;&#20043;&#38388;&#19981;&#38656;&#35201;&#26377;&#38388;&#38548;&#31526;&#65292;&#33509;&#38656;&#35201;&#36716;&#31227;&#21482;&#35201;&#21152;&#19978;\&#21363;&#21487;,&#25152;&#26377;&#20998;&#38548;&#31526;&#20351;&#29992; []&#34;</span><br></pre></td></tr></table></figure>
+<h2 id="安装_ibus">安装 ibus</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install ibus ibus-clutter ibus-gtk ibus-gtk3 ibus-qt4  &#10;im-switch -s ibus  &#10;sudo apt-get install ibus-pinyin  &#10;ibus-setup</span><br></pre></td></tr></table></figure>
+<h2 id="ip_to_num(python)">ip to num(python)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print socket.ntohl(struct.unpack\_from(&#39;=L&#39;, socket.inet_aton(sys.argv[2]))[0])</span><br></pre></td></tr></table></figure>
+<h2 id="num_to_ip_(python)">num to ip  (python)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print socket.inet_ntoa(struct.pack(&#39;=L&#39;, socket.htonl(string.atoi(sys.argv[2]))))</span><br></pre></td></tr></table></figure>
+<h2 id="time_to_timestamp_(python)">time to timestamp  (python)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print (int(time.mktime(time.strptime(sys.argv[2], &#34;%Y-%m-%d&#34;))))</span><br></pre></td></tr></table></figure>
+<h2 id="timestamp_to_time_(python)">timestamp to time  (python)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print (time.strftime(&#39;%Y-%m-%d %H:%M:%S&#39;, time.localtime(int(sys.argv[2]))))</span><br></pre></td></tr></table></figure>
+<h2 id="shell生成随机字符串">shell生成随机字符串</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date +%s%N | md5sum | head -c 10</span><br></pre></td></tr></table></figure>
+<h2 id="svn_相关操作">svn 相关操作</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn co -r&#29256;&#26412;&#21495; snv_address  &#10;svn status&#10;svn export rep-url&#10;svn diff&#10;svn ci fils -m&#34;x&#34;</span><br></pre></td></tr></table></figure>
+<h2 id="svn_出现_错误">svn 出现 错误</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#20808;&#21024;&#25481; .svn&#25991;&#20214;(&#37325;&#35201;) &#20063;&#21487;&#20197;&#20808;svn co  &#10;&#20877;&#36827;&#34892; svn add  &#10;&#22312;svn ci</span><br></pre></td></tr></table></figure>
+<h2 id="查看哪个端口_当前有哪些连接，有哪些状态">查看哪个端口 当前有哪些连接，有哪些状态</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -nap  &#10;lsof -i: port&#10;tcpdump</span><br></pre></td></tr></table></figure>
+<h2 id="脚本中命令最好都加上_-v_参数">脚本中命令最好都加上 -v 参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -v -w -r  &#10;rm -i -r -f -v  &#10;cp -v</span><br></pre></td></tr></table></figure>
+<h2 id="dos2unix">dos2unix</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dos2unix &#23558;dos&#25991;&#20214;&#26684;&#24335;&#20013;&#30340;^M&#21435;&#38500;</span><br></pre></td></tr></table></figure>
+<h2 id="xargs使用注意">xargs使用注意</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xargs -I &#21518;&#38754;&#21464;&#37327;&#37325;&#21629;&#21517;&#26368;&#22909;&#29992; &#123;&#125; &#21363; xargs -I&#123;&#125; cmd... &#123;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="tr_转换大小写">tr 转换大小写</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#34;dsd&#34; | tr &#34;[a-z]&#34; &#34;[A-Z&#34;</span><br></pre></td></tr></table></figure>
+<h2 id="cut_按分隔符分割且取给定的字段">cut 按分隔符分割且取给定的字段</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#34;ds:ds&#34; | cut -f1 -d&#39;:&#39;</span><br></pre></td></tr></table></figure>
+<h2 id="磁盘，网络io监控工具">磁盘，网络io监控工具</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">htop, top, netstat , tcpdump, free, du, dstat, iostat</span><br></pre></td></tr></table></figure>
+<h2 id="在目录下_tar_文件注意">在目录下 tar 文件注意</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#19981;&#35201;&#29992; tar -czf name.tar.gz ./*  (&#28304;&#25991;&#20214;&#19968;&#23450;&#35201;&#25351;&#26126;) ./* &#20250;&#23558; name.tar.gz &#19968;&#36215;&#25171;&#21253;</span><br></pre></td></tr></table></figure>
+<h2 id="字符串和数字比较直接使用_=_号进行比较">字符串和数字比较直接使用 = 号进行比较</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if [ $str = &#34;walter&#34; ]; then&#10;fi&#10;&#10;if [ $str = 1 ]; then&#10;fi</span><br></pre></td></tr></table></figure>
+<h2 id="pushd,_pod_多用于脚本递归目录时使用">pushd, pod 多用于脚本递归目录时使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pushd &#34;$PWD&#34; 1&#62;/dev/null&#10;cd $d &#10;do_recur_function&#10;popd</span><br></pre></td></tr></table></figure>
+<h2 id="shell中获取进程ID">shell中获取进程ID</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo \$\$ \[\$\$ &#21363;&#26159; &#36827;&#31243;ID]</span><br></pre></td></tr></table></figure>
+<h2 id="shell编程">shell编程</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#21644;&#20854;&#20182;&#32534;&#31243;&#19968;&#26679;&#65292;&#23569;&#29992;global variables, &#20989;&#25968;&#20869;&#37096;&#20351;&#29992;local variables</span><br></pre></td></tr></table></figure>
+<h2 id="find_使用">find 使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -ctime +n (&#21019;&#24314;&#26102;&#38388;&#22312;n+1 &#22825;&#20197;&#19978;)  -ctime n(&#21019;&#24314;&#26102;&#38388;&#22312;n &#22825;) ctime -n (&#21019;&#24314;&#26102;&#38388;&#22312;n&#22825;&#20197;&#20869;)</span><br></pre></td></tr></table></figure>
+<h2 id="bash_set_使用">bash set 使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set -e &#31243;&#24207;&#36816;&#34892;&#20013;&#26377;&#19968;&#22788;&#22833;&#36133;&#65292;&#31243;&#24207;&#23601;&#31435;&#21363;&#36864;&#20986;&#25191;&#34892;&#65292; -x &#31243;&#24207;&#36816;&#34892;&#36807;&#31243;debug&#27169;&#24335;&#65292;&#36755;&#20986;&#20449;&#24687;</span><br></pre></td></tr></table></figure>
+<h2 id="shell_加密文件">shell 加密文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gzexe filename</span><br></pre></td></tr></table></figure>
+<h2 id="()的使用">()的使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$() &#26159;&#21629;&#20196;&#26367;&#25442;&#10;eg: f=$(ls) : f &#26159;&#26412;&#30446;&#24405;&#19979;&#25991;&#20214;&#30340;&#38598;&#21512;&#10;date=$(date +&#34;%Y-%m-%d %H-%m-%S&#34;)</span><br></pre></td></tr></table></figure>
+<h2 id="${}_的使用">${} 的使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&#125; &#26159;&#21464;&#37327;&#26367;&#25442;&#10;A=B&#10;echo $&#123;A&#125;B : AB&#10;&#26368;&#24120;&#29992;&#30340;&#29992;&#36884;&#26159;&#21464;&#37327;&#26367;&#25442;&#10;file=/dir1/dir2/dir3/my.file.txt&#10;$&#123;file#*/&#125;&#65306;&#25343;&#25481;&#31532;&#19968;&#26465; / &#21450;&#20854;&#24038;&#37002;&#30340;&#23383;&#20018;&#65306;dir1/dir2/dir3/my.file.txt&#10;$&#123;file##*/&#125;&#65306;&#25343;&#25481;&#26368;&#21518;&#19968;&#26465; / &#21450;&#20854;&#24038;&#37002;&#30340;&#23383;&#20018;&#65306;my.file.txt&#10;$&#123;file#*.&#125;&#65306;&#25343;&#25481;&#31532;&#19968;&#20491; .  &#21450;&#20854;&#24038;&#37002;&#30340;&#23383;&#20018;&#65306;file.txt&#10;$&#123;file##*.&#125;&#65306;&#25343;&#25481;&#26368;&#21518;&#19968;&#20491; .  &#21450;&#20854;&#24038;&#37002;&#30340;&#23383;&#20018;&#65306;txt&#10;$&#123;file%/*&#125;&#65306;&#25343;&#25481;&#26368;&#21518;&#19968;&#26465; / &#21450;&#20854;&#21491;&#37002;&#30340;&#23383;&#20018;&#65306;/dir1/dir2/dir3&#10;$&#123;file%%/*&#125;&#65306;&#25343;&#25481;&#31532;&#19968;&#26465; / &#21450;&#20854;&#21491;&#37002;&#30340;&#23383;&#20018;&#65306;(&#31354;&#20540;)&#10;$&#123;file%.*&#125;&#65306;&#25343;&#25481;&#26368;&#21518;&#19968;&#20491; .  &#21450;&#20854;&#21491;&#37002;&#30340;&#23383;&#20018;&#65306;/dir1/dir2/dir3/my.file&#10;$&#123;file%%.*&#125;&#65306;&#25343;&#25481;&#31532;&#19968;&#20491; .  &#21450;&#20854;&#21491;&#37002;&#30340;&#23383;&#20018;&#65306;/dir1/dir2/dir3/my&#10;&#25130;&#21462;&#23383;&#31526;&#20018;&#30340;n&#20010;&#23383;&#31526;&#10;$&#123;file:n:m&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="记忆的方法为：">记忆的方法为：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\# &#26159;&#21435;&#25481;&#24038;&#37002;(&#22312;&#38190;&#30424;&#19978; # &#22312; $ &#20043;&#24038;&#36793;)&#10;% &#26159;&#21435;&#25481;&#21491;&#37002;(&#22312;&#38190;&#30424;&#19978; % &#22312; $ &#20043;&#21491;&#36793;)</span><br></pre></td></tr></table></figure>
+<h3 id="$(())_用来整数运算的">$(()) 用来整数运算的</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eg: a = 1&#10;    b = 2&#10;    c = $((a+b))</span><br></pre></td></tr></table></figure>
+<h2 id="tcpdump_打印收到包的详细信息">tcpdump 打印收到包的详细信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -Avvvs 1500 -i eth0 src port 80[3306] &#36820;&#22238;&#10;tcpdump -Avvvs 1500 -i eth0 dst port 80[3306] &#35831;&#27714;</span><br></pre></td></tr></table></figure>
+<h2 id="当前用户已另外一用户执行脚本无需输入密码">当前用户已另外一用户执行脚本无需输入密码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#22312; sudoer &#20013;&#28155;&#21152; user1 ALL=(user2) NOPASSWD: /home/user2/bin/test.sh&#10;&#20351;&#29992; sudo -u user2 /home/user2/bin/test.sh</span><br></pre></td></tr></table></figure>
+<h2 id="查看二进制文件">查看二进制文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hd 用来cat 二进制文件</span><br><span class="line">bvi 用来编辑 二进制文件 (首先 apt-get install bvi)</span><br></pre></td></tr></table></figure>
+<h2 id="查看系统的发行版信息">查看系统的发行版信息</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsb_release <span class="operator">-a</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用_bash_的严格模式[非官方]">使用 bash 的严格模式[非官方]</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> -euo pipefail</span><br><span class="line">IFS=$<span class="string">'\n\t'</span></span><br></pre></td></tr></table></figure>
+<p>参考：<a href="http://redsymbol.net/articles/unofficial-bash-strict-mode/" target="_blank" rel="external">http://redsymbol.net/articles/unofficial-bash-strict-mode/</a></p>
+<h2 id="vim_中快速分屏">vim 中快速分屏</h2><ul>
+<li>ctrl-w v 竖屏</li>
+<li>ctrl-w s 横屏</li>
+</ul>
+<h2 id="bash_设置时区">bash 设置时区</h2><ul>
+<li>首先查看 /etc/timezone 下的时区，也可以使用 date -R </li>
+<li>修改时区 </li>
+</ul>
+<ul>
+<li>tzselect(设置完后需要export. eg:TZ=’America/Anguilla’; export TZ)</li>
+<li>仅限于RedHat Linux 和 CentOS<br>  timeconfig</li>
+<li>适用于Debian<br>  dpkg-reconfigure tzdata</li>
+<li>复制相应的时区文件，替换系统时区文件；或者创建链接文件<br>  cp /usr/share/zoneinfo/$主时区[Asia]/$次时区[Shanghai] /etc/localtime</li>
+</ul>
+<p>参考:<br><a href="http://www.cnblogs.com/h2appy/archive/2008/11/27/1342029.html" target="_blank" rel="external">http://www.cnblogs.com/h2appy/archive/2008/11/27/1342029.html</a></p>
+<h2 id="tmux_使用">tmux 使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>. <span class="built_in">kill</span> -<span class="number">9</span> tmux  <span class="comment"># 干掉tmux session</span></span><br><span class="line"><span class="number">2</span>. tmux attach  <span class="comment"># attach之前的 session</span></span><br><span class="line"><span class="number">3</span>. prefix + :  输入 <span class="built_in">source</span>-file ~/.tmux.conf 更改热更新</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下面是我的配置</span></span><br><span class="line"><span class="built_in">set</span> -g prefix C-q</span><br><span class="line">unbind C-b</span><br><span class="line"></span><br><span class="line"><span class="comment"># Status bar</span></span><br><span class="line"><span class="comment"># colors</span></span><br><span class="line"><span class="built_in">set</span> -g status-bg black</span><br><span class="line"><span class="built_in">set</span> -g status-fg white</span><br><span class="line"></span><br><span class="line"><span class="comment"># alignment</span></span><br><span class="line"><span class="built_in">set</span>-option -g status-justify centre</span><br><span class="line"></span><br><span class="line"><span class="comment"># spot at left</span></span><br><span class="line"><span class="built_in">set</span>-option -g status-left <span class="string">'#[bg=black,fg=green][#[fg=cyan]#S#[fg=green]]'</span></span><br><span class="line"><span class="built_in">set</span>-option -g status-left-length <span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># window list</span></span><br><span class="line">setw -g automatic-rename on</span><br><span class="line"><span class="built_in">set</span>-window-option -g window-status-format <span class="string">'#[dim]#I:#[default]#W#[fg=grey,dim]'</span></span><br><span class="line"><span class="built_in">set</span>-window-option -g window-status-current-format <span class="string">'#[fg=cyan,bold]#I#[fg=blue]:#[fg=cyan]#W#[fg=dim]'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># spot at right</span></span><br><span class="line"><span class="built_in">set</span> -g status-right <span class="string">'#[fg=green][#[fg=cyan]%Y-%m-%d %H:%M:%S#[fg=green]]'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># select window</span></span><br><span class="line"><span class="comment"># up</span></span><br><span class="line"><span class="built_in">bind</span>-key k select-pane -U</span><br><span class="line"><span class="comment"># down</span></span><br><span class="line"><span class="built_in">bind</span>-key j select-pane -D</span><br><span class="line"><span class="comment"># left</span></span><br><span class="line"><span class="built_in">bind</span>-key h select-pane -L</span><br><span class="line"><span class="comment"># right</span></span><br><span class="line"><span class="built_in">bind</span>-key l select-pane -R</span><br></pre></td></tr></table></figure>
+<h2 id="tmux_中_vim_powerline_显示不对解决">tmux 中 vim powerline 显示不对解决</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在 .bashrc 中增加</span><br><span class="line"><span class="built_in">export</span> TERM=<span class="string">"screen-256color"</span></span><br><span class="line"><span class="built_in">alias</span> tmux=<span class="string">"tmux -2"</span></span><br></pre></td></tr></table></figure>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2015/06/28/java-collection-class-diagram/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2015/06/27/java-execute-order/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2015/06/28/bash-use-summary/" data-title="bash使用小结" data-url="http://yoursite.com/2015/06/28/bash-use-summary/"></div>  
+  
+</section>
+
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	Jun 28 2015 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/summary/">summary<span>7</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/bash/">bash<span>1</span></a></li> <li><a href="/tags/linux/">linux<span>2</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2015 Walter
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'walterlife' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

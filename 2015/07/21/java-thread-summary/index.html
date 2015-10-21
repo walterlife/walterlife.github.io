@@ -1,0 +1,310 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Java Thread 相关知识点 | Walter&#39;s Blog</title>
+  <meta name="author" content="Walter">
+  
+  <meta name="description" content="做一个文雅的程序员">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Java Thread 相关知识点"/>
+  <meta property="og:site_name" content="Walter&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?null";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Walter&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="所有文章归档">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="所有文档分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="所有文档标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">		
+			<h1> Java Thread 相关知识点</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+			
+
+	<!-- content -->
+	<div class="mypage">		
+	    <h2 id="1-_start_与_run_的区别">1. start 与 run 的区别</h2><ul>
+<li>start 会新创建一个线程，并且执行重新的run方法中的代码</li>
+<li>run 不会新创建一个线程，而在当前线程内执行 run方法内的代码</li>
+<li>start 方法不能连续调用，否则会抛出 IllegalStateException</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.javacore;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.Thread;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StartVsRunCall</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String[] args )</span> </span>&#123; </span><br><span class="line">        Thread startThread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Task(<span class="string">"start"</span>), <span class="string">"startThread"</span>); </span><br><span class="line">        Thread runThread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Task(<span class="string">"run"</span>), <span class="string">"runThread"</span>);                                                                                                                         </span><br><span class="line"></span><br><span class="line">        startThread.start();</span><br><span class="line">        runThread.run();</span><br><span class="line">    &#125;   </span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Task</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> String caller;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Task</span><span class="params">(String caller)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.caller = caller;</span><br><span class="line">        &#125;   </span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"caller: "</span> + <span class="keyword">this</span>.caller + <span class="string">" and code exectue in thread "</span> + Thread.currentThread().getName());</span><br><span class="line">        &#125;   </span><br><span class="line">    &#125;   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Output:</span></span><br><span class="line">caller: run and code exectue in thread main</span><br><span class="line">caller: start and code exectue in thread startThread</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="2-_extends_Thread_和_implements_Runnable_有什么区别,哪一个更好">2. extends Thread 和 implements Runnable 有什么区别,哪一个更好</h2><ul>
+<li>extends Thread 需要 自己实现 构造函数，并且构造函数要调父类的构造函数(super(“threadnmae”))和 实现run方法</li>
+<li>implements Runnable 只需要实现 run 方法即可</li>
+<li>因为java不支持多继承，所以使用 implements Runnable 会更好，这样你设计的类还可以继承其他类<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoRunnable</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//Code</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//with a "new Thread(demoRunnable).start()" call</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DemoThread</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(<span class="string">"DemoThread"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//Code</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//with a "demoThread.start()" call</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="3-_Callable_和_Runnable_有什么区别">3. Callable 和 Runnable 有什么区别</h2><ul>
+<li>Callable 是在 Runnable 之后添加的，在Java5.0增加的</li>
+<li>Runnable使用run 方法 而 Callable 使用 call 方法中的方法</li>
+<li>Runnable 没有返回参数，而Callable 有返回参数，参数类型根据创建实例的泛型参数</li>
+<li>Runnable 不能抛出 checked exception, 而 Callable可以</li>
+</ul>
+<h2 id="4-_wait_和_sleep_的区别">4. wait 和 sleep 的区别</h2><ul>
+<li>wait 方法是使用对象调用的[每个Object都有，是成员函数]，而 sleep 是 使用 class[Thread] 调用的[是静态函数]</li>
+<li>wait 方法必须在 synchronized 代码块中调用，不然会抛出 IllegalMonitorStateException异常。sleep 调用没有任何限制</li>
+<li>在 synchronized 方法块中调用wait 方法时会释放 locked Object 资源，而sleep 不会</li>
+<li>wait 需要在 循环中调用，即在条件变量为真时，wait,等到条件变量为假时，从新回到 running 状态, 而 sleep 没有类似的功能，并且最好不要在循环中call sleep</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span>(monitor)</span><br><span class="line"><span class="keyword">while</span>(condition == <span class="keyword">true</span>)&#123; monitor.wait())  <span class="comment">//releases monitor lock</span></span><br><span class="line"></span><br><span class="line">Thread.sleep(<span class="number">100</span>); <span class="comment">//puts current thread on Sleep</span></span><br></pre></td></tr></table></figure>
+<h2 id="5-_使用多线程解决消费者生产者问题">5. 使用多线程解决消费者生产者问题</h2><ul>
+<li><p>使用非Blocking数据结构实现需要自己实现数据间的同步访问[使用wait, notifyAll, notify, synchronized 实现同步]</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.javacore;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Vector;</span><br><span class="line"><span class="keyword">import</span> java.util.logging.Level;</span><br><span class="line"><span class="keyword">import</span> java.util.logging.Logger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProducerConsumerSolution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String[] args )</span> </span>&#123;</span><br><span class="line">        Vector&lt;Integer&gt; sharedProduct = <span class="keyword">new</span> Vector&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">int</span> size = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line">        Thread producer = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Producer(sharedProduct, size), <span class="string">"producer"</span>);</span><br><span class="line">        Thread consumer = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Consumer(sharedProduct, size), <span class="string">"consumer"</span>);</span><br><span class="line"></span><br><span class="line">        producer.start();</span><br><span class="line">        consumer.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Producer</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span>  Vector&lt;Integer&gt; sharedProduct;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span>  <span class="keyword">int</span>    SIZE;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> PRODUCTOR_NUM = <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Producer</span><span class="params">(Vector sharedProduct, <span class="keyword">int</span> size)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.sharedProduct = sharedProduct;</span><br><span class="line">        <span class="keyword">this</span>.SIZE = size;</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> productor = <span class="number">0</span>; productor &lt; PRODUCTOR_NUM; productor++) &#123;</span><br><span class="line">                producer(productor);</span><br><span class="line">            &#125; </span><br><span class="line">        &#125; <span class="keyword">catch</span>(InterruptedException ex) &#123;</span><br><span class="line">            Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, <span class="keyword">null</span>, ex);            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">producer</span><span class="params">(<span class="keyword">int</span> productor)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="comment">// productor too much, wait</span></span><br><span class="line">        <span class="keyword">while</span>(sharedProduct.size() == SIZE) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (sharedProduct) &#123;</span><br><span class="line">                System.out.println(<span class="string">"Queue is full "</span> + Thread.currentThread().getName()</span><br><span class="line">                        + <span class="string">" is waiting , size: "</span> + sharedProduct.size());</span><br><span class="line">                sharedProduct.wait();</span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        <span class="comment">// producer productor</span></span><br><span class="line">        <span class="keyword">synchronized</span> (sharedProduct) &#123;</span><br><span class="line">            sharedProduct.add(productor);</span><br><span class="line">            sharedProduct.notifyAll();</span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Vector&lt;Integer&gt; sharedProduct;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> SIZE;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Consumer</span><span class="params">(Vector sharedProduct, <span class="keyword">int</span> size)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.sharedProduct = sharedProduct;</span><br><span class="line">        <span class="keyword">this</span>.SIZE = size;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">"Consumed: "</span> + consume());</span><br><span class="line">                Thread.sleep(<span class="number">50</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException ex) &#123;</span><br><span class="line">                Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, <span class="keyword">null</span>, ex);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> Integer <span class="title">consume</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="comment">// wait if queue is empty</span></span><br><span class="line">        <span class="keyword">while</span> (sharedProduct.isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (sharedProduct) &#123;</span><br><span class="line">                System.out.println(<span class="string">"Queue is empty "</span> + Thread.currentThread().getName()</span><br><span class="line">                        + <span class="string">" is waiting , size: "</span> + sharedProduct.size());</span><br><span class="line"></span><br><span class="line">                sharedProduct.wait();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Otherwise consume element and notify waiting producer</span></span><br><span class="line">        <span class="keyword">synchronized</span> (sharedProduct) &#123;</span><br><span class="line">            sharedProduct.notifyAll();</span><br><span class="line">            <span class="keyword">return</span> (Integer) sharedProduct.remove(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">// output </span></span><br><span class="line">Queue is full producer is waiting , size: <span class="number">4</span></span><br><span class="line">Consumed: <span class="number">0</span></span><br><span class="line">Queue is full producer is waiting , size: <span class="number">4</span></span><br><span class="line">Consumed: <span class="number">1</span></span><br><span class="line">Queue is full producer is waiting , size: <span class="number">4</span></span><br><span class="line">Consumed: <span class="number">2</span></span><br><span class="line">Consumed: <span class="number">3</span></span><br><span class="line">Consumed: <span class="number">4</span></span><br><span class="line">Consumed: <span class="number">5</span></span><br><span class="line">Consumed: <span class="number">6</span></span><br><span class="line">Queue is empty consumer is waiting , size: <span class="number">0</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用Blocking数据结实现生产者和消费者功能</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.javacore;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Vector;</span><br><span class="line"><span class="keyword">import</span> java.util.logging.Level;</span><br><span class="line"><span class="keyword">import</span> java.util.logging.Logger;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.BlockingQueue;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.LinkedBlockingQueue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProducerConsumerSolutionV2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">( String[] args )</span> </span>&#123;</span><br><span class="line">        BlockingQueue&lt;Integer&gt; sharedProduct = <span class="keyword">new</span> LinkedBlockingQueue&lt;Integer&gt;();</span><br><span class="line"></span><br><span class="line">        Thread producer = <span class="keyword">new</span> Thread(<span class="keyword">new</span> ProducerV2(sharedProduct), <span class="string">"producer"</span>);</span><br><span class="line">        Thread consumer = <span class="keyword">new</span> Thread(<span class="keyword">new</span> ConsumerV2(sharedProduct), <span class="string">"consumer"</span>);</span><br><span class="line"></span><br><span class="line">        producer.start();</span><br><span class="line">        consumer.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProducerV2</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span>  BlockingQueue&lt;Integer&gt; sharedProduct;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> PRODUCTOR_NUM = <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ProducerV2</span><span class="params">(BlockingQueue&lt;Integer&gt; sharedProduct)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.sharedProduct = sharedProduct;</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> productor = <span class="number">0</span>; productor &lt; PRODUCTOR_NUM; productor++) &#123;</span><br><span class="line">                System.out.println(<span class="string">"Produced: "</span> + productor);   </span><br><span class="line">                sharedProduct.put(productor);</span><br><span class="line">            &#125; </span><br><span class="line">        &#125; <span class="keyword">catch</span>(InterruptedException ex) &#123;</span><br><span class="line">            Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, <span class="keyword">null</span>, ex);            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConsumerV2</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> BlockingQueue&lt;Integer&gt; sharedProduct;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConsumerV2</span><span class="params">(BlockingQueue&lt;Integer&gt; sharedProduct)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.sharedProduct = sharedProduct;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">"Consumed: "</span> + sharedProduct.take());</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException ex) &#123;</span><br><span class="line">                Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, <span class="keyword">null</span>, ex);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="6-_如何在线程运行的过程中退出">6. 如何在线程运行的过程中退出</h2><ul>
+<li>使用一个变量来控制退出<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.javacore;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.logging.Logger;</span><br><span class="line"><span class="keyword">import</span> java.lang.Thread;</span><br><span class="line"><span class="keyword">import</span> java.util.logging.Level;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StopThread</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span> <span class="params">(String [] args)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Runner</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> exit = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 控制 线程退出</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exit</span><span class="params">(<span class="keyword">boolean</span> exit)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.exit = exit; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (!exit) &#123;</span><br><span class="line">            System.out.print(<span class="string">"Thread is running\n"</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">20</span>); </span><br><span class="line">            &#125; <span class="keyword">catch</span>(InterruptedException ex) &#123;</span><br><span class="line">                Logger.getLogger(Runner.class.getName()).log(Level.SEVERE, <span class="keyword">null</span>, ex);            </span><br><span class="line">            &#125;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="7-_现有线程_T1,_T2,_T3,_如何保证3个线程按照顺序执行[T1-&gt;T2-&gt;T3]">7. 现有线程 T1, T2, T3, 如何保证3个线程按照顺序执行[T1-&gt;T2-&gt;T3]</h2><ul>
+<li>使用 Thread 的join 成员方法来实现<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.logging.Level;</span><br><span class="line"><span class="keyword">import</span> java.util.logging.Logger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JoinTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span> <span class="params">(String [] args)</span> </span>&#123;</span><br><span class="line">        Thread ta = <span class="keyword">new</span> Thread(<span class="keyword">new</span> ThreadA(), <span class="string">"ThreadA"</span>);</span><br><span class="line">        Thread tb = <span class="keyword">new</span> Thread(<span class="keyword">new</span> ThreadB(), <span class="string">"ThreadB"</span>);</span><br><span class="line">        Thread tc = <span class="keyword">new</span> Thread(<span class="keyword">new</span> ThreadC(), <span class="string">"ThreadC"</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ta.start();</span><br><span class="line">            <span class="comment">// join 方法 使得 调用的线程必须先执行完，再接着执行下面的代码</span></span><br><span class="line">            ta.join();</span><br><span class="line">            tb.start();</span><br><span class="line">            tb.join();</span><br><span class="line">            tc.start();</span><br><span class="line">            tc.join();</span><br><span class="line">            System.out.printf(<span class="string">"Thrad name: %s\n"</span>, Thread.currentThread().getName());</span><br><span class="line">        &#125; <span class="keyword">catch</span>(InterruptedException ex) &#123;</span><br><span class="line">            Logger.getLogger(JoinTest.class.getName()).log(Level.SEVERE, <span class="keyword">null</span>, ex);            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadA</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.printf(<span class="string">"Thread name: %s\n"</span>, Thread.currentThread().getName());</span><br><span class="line">    &#125; </span><br><span class="line">&#125;    </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadB</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.printf(<span class="string">"Thread name: %s\n"</span>, Thread.currentThread().getName());</span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadC</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.printf(<span class="string">"Thread name: %s\n"</span>, Thread.currentThread().getName());</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="8-_为什么_wait,_notify,_notifyAll_方法必须在_synchronized_代码块内执行">8. 为什么 wait, notify, notifyAll 方法必须在 synchronized 代码块内执行</h2><ul>
+<li>首先之所以会调用这些函数，是因为 竞态条件[race condition]发生变化了</li>
+<li>而在多线程中如果要检查 竞态条件的状态，必须要获得这个竞态条件的锁</li>
+<li>synchronized 代码块保证了只有一个线程可以获取竞态条件的锁，并读取值或改变</li>
+</ul>
+<h2 id="9-_怎样在线程收到异常时重新启动线程">9. 怎样在线程收到异常时重新启动线程</h2><ul>
+<li>设置 UncaughtExceptionHandler <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.javacore;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.Thread.UncaughtExceptionHandler;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExceptionHandler</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span> <span class="params">(String [] args)</span> </span>&#123;</span><br><span class="line">        Thread task = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Task(), <span class="string">"task_one"</span>);</span><br><span class="line">        task.start();</span><br><span class="line">        String a;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SelfExceptionHandler</span> <span class="keyword">implements</span> <span class="title">UncaughtExceptionHandler</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">uncaughtException</span><span class="params">(Thread t, Throwable e)</span> </span>&#123;</span><br><span class="line">        System.out.printf(<span class="string">"An exception has been captured\n"</span>);</span><br><span class="line">        System.out.printf(<span class="string">"Thread: %s\n"</span>, t.getId());</span><br><span class="line">        System.out.printf(<span class="string">"Exception: %s: %s\n"</span>, e.getClass().getName(), e.getMessage());</span><br><span class="line">        System.out.printf(<span class="string">"Stack Trace: \n"</span>);</span><br><span class="line">        e.printStackTrace(System.out);</span><br><span class="line">        System.out.printf(<span class="string">"Thread status: %s\n"</span>, t.getState());</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Task(), <span class="string">"task_one"</span>).start();</span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Task</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Thread.currentThread().setUncaughtExceptionHandler(<span class="keyword">new</span> SelfExceptionHandler());</span><br><span class="line">        System.out.println(Integer.parseInt(<span class="string">"123"</span>));</span><br><span class="line">        System.out.println(Integer.parseInt(<span class="string">"123"</span>));</span><br><span class="line">        System.out.println(Integer.parseInt(<span class="string">"123"</span>));</span><br><span class="line">        System.out.println(Integer.parseInt(<span class="string">"xyz"</span>));</span><br><span class="line">        System.out.println(Integer.parseInt(<span class="string">"123"</span>));</span><br><span class="line">        System.out.println(Integer.parseInt(<span class="string">"123"</span>));</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2015/07/30/java-servlet-summary/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2015/07/20/java-struts2-summary/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2015/07/21/java-thread-summary/" data-title="Java Thread 相关知识点" data-url="http://yoursite.com/2015/07/21/java-thread-summary/"></div>  
+  
+</section>
+
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	Jul 21 2015 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/summary/">summary<span>7</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/core-java/">core-java<span>6</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2015 Walter
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'walterlife' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

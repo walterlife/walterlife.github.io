@@ -1,0 +1,273 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Java设计模式学习之工厂模式 | Walter&#39;s Blog</title>
+  <meta name="author" content="Walter">
+  
+  <meta name="description" content="做一个文雅的程序员">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Java设计模式学习之工厂模式"/>
+  <meta property="og:site_name" content="Walter&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?null";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Walter&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="所有文章归档">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="所有文档分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="所有文档标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">		
+			<h1> Java设计模式学习之工厂模式</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+			
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>工厂模式是创造型模式的一种，在java框架如Spring,struts2被广泛运用</p>
+<p>该模式运用于：当程序中有一父类和一堆子类，子类的创建是根据输入的不同返回不同的子类<br>实例。此时只要实现一个工厂类负责不同子类的返回，代替客户端程序来返回实例。</p>
+<p>下面例子使用Computer的类来说明工厂模式的实现机制</p>
+<h2 id="超类">超类</h2><p>Computer.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.dp.FactoryDP;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Computer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getRam</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getHdd</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getCpu</span><span class="params">()</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"RAM: "</span> + getRam() </span><br><span class="line">            + <span class="string">" HDD: "</span> + getHdd()</span><br><span class="line">            + <span class="string">" CPU: "</span> + getCpu();</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h2 id="子类">子类</h2><p>PC.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.dp.FactoryDP;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PC</span> <span class="keyword">extends</span> <span class="title">Computer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String ram;</span><br><span class="line">    <span class="keyword">public</span> String hdd;</span><br><span class="line">    <span class="keyword">public</span> String cpu;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PC</span><span class="params">(String ram, String hdd, String cpu)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.ram = ram;</span><br><span class="line">        <span class="keyword">this</span>.hdd = hdd;</span><br><span class="line">        <span class="keyword">this</span>.cpu = cpu;</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@return</span> the ram</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getRam</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ram;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@param</span> ram the ram to set</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRam</span><span class="params">(String ram)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.ram = ram;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@return</span> the hdd</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getHdd</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> hdd;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@param</span> hdd the hdd to set</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHdd</span><span class="params">(String hdd)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.hdd = hdd;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@return</span> the cpu</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCpu</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> cpu;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@param</span> cpu the cpu to set</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCpu</span><span class="params">(String cpu)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.cpu = cpu;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Server.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.dp.FactoryDP;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Server</span> <span class="keyword">extends</span> <span class="title">Computer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String ram;</span><br><span class="line">    <span class="keyword">public</span> String hdd;</span><br><span class="line">    <span class="keyword">public</span> String cpu;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Server</span><span class="params">(String ram, String hdd, String cpu)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.ram = ram;</span><br><span class="line">        <span class="keyword">this</span>.hdd = hdd;</span><br><span class="line">        <span class="keyword">this</span>.cpu = cpu;</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@return</span> the ram</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getRam</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ram;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@param</span> ram the ram to set</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRam</span><span class="params">(String ram)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.ram = ram;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@return</span> the hdd</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getHdd</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> hdd;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@param</span> hdd the hdd to set</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHdd</span><span class="params">(String hdd)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.hdd = hdd;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@return</span> the cpu</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCpu</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> cpu;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@param</span> cpu the cpu to set</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCpu</span><span class="params">(String cpu)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.cpu = cpu;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="工厂类">工厂类</h2><p>ComputerFactory.java, 是一个工厂类，根据不同的电脑类型产出不同类型的电脑<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span>  com.walterlife.dp.FactoryDP;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.Logger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ComputerFactory</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> Logger logger = Logger.getLogger(ComputerFactory.class);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Computer <span class="title">getComputer</span><span class="params">(String type, String ram, String hdd, String cpu)</span> </span>&#123;</span><br><span class="line">        Computer computer = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">"pc"</span>.equalsIgnoreCase(type)) &#123;</span><br><span class="line">            computer = <span class="keyword">new</span> PC(ram, hdd, cpu);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">"server"</span>.equalsIgnoreCase(type)) &#123;</span><br><span class="line">            computer = <span class="keyword">new</span> Server(ram, hdd, cpu);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            logger.warn(<span class="string">"type: "</span> + type + <span class="string">" is not exist!!!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> computer;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testFactoryDP</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Computer pc = ComputerFactory.getComputer(<span class="string">"pc"</span>, <span class="string">"2.GB"</span>, <span class="string">"500GB"</span>, <span class="string">"2.4 GHz"</span>);</span><br><span class="line">    Computer server = ComputerFactory.getComputer(<span class="string">"server"</span>, <span class="string">"16GB"</span>, <span class="string">"1TB"</span>, <span class="string">"4 GHz"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(pc != <span class="keyword">null</span>) &#123;</span><br><span class="line">        logger.info(<span class="string">"PC config :"</span> + pc.toString());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        logger.warn(<span class="string">"PC instace is null!!!"</span>);</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(server != <span class="keyword">null</span>) &#123;</span><br><span class="line">        logger.info(<span class="string">"Server config :"</span> + server.toString());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        logger.warn(<span class="string">"Server instace is null!!!"</span>);</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>输出<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2015</span>-<span class="number">08</span>-<span class="number">23</span> <span class="number">18</span>:<span class="number">14</span>:<span class="number">06</span> INFO  com.walterlife.dp.App testFactoryDP:<span class="number">26</span> -&gt; PC config :RAM: <span class="number">2</span>.GB HDD: <span class="number">500</span>GB CPU: <span class="number">2.4</span> GHz</span><br><span class="line"><span class="number">2015</span>-<span class="number">08</span>-<span class="number">23</span> <span class="number">18</span>:<span class="number">14</span>:<span class="number">06</span> INFO  com.walterlife.dp.App testFactoryDP:<span class="number">32</span> -&gt; Server config :RAM: <span class="number">16</span>GB HDD: <span class="number">1</span>TB CPU: <span class="number">4</span> GHz</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用工厂模式的好处">使用工厂模式的好处</h2><ol>
+<li>工厂模式是面向接口的，而不是面向实现的</li>
+<li>工厂模式将具体子类的创建从客户端代码分离，实现了松耦合，易于扩展</li>
+</ol>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2015/07/07/java-design-pattern-abstract-factory/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2015/07/06/java-design-pattern-summory/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2015/07/06/java-design-pattern-factory/" data-title="Java设计模式学习之工厂模式" data-url="http://yoursite.com/2015/07/06/java-design-pattern-factory/"></div>  
+  
+</section>
+
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	Jul 6 2015 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/java/">java<span>20</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/design-pattern/">design-pattern<span>13</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2015 Walter
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'walterlife' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

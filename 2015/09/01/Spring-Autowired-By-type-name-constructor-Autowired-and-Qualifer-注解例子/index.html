@@ -1,0 +1,288 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Spring Autowired By type,name,constructor,Autowired and Qualifer 注解例子 | Walter&#39;s Blog</title>
+  <meta name="author" content="Walter">
+  
+  <meta name="description" content="做一个文雅的程序员">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Spring Autowired By type,name,constructor,Autowired and Qualifer 注解例子"/>
+  <meta property="og:site_name" content="Walter&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?null";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Walter&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="所有文章归档">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="所有文档分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="所有文档标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">		
+			<h1> Spring Autowired By type,name,constructor,Autowired and Qualifer 注解例子</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+			
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>Spring Framework的主要特性之一是DI[依赖注入],而实现该方式主要通过配置spring bean的</p>
+<p>通常我们会在bean configuration file 中配置程序想要注入的bean 配置，也可以引用配置在其他 file中的bean[通过 ref 引用]。这种方法在需要注入很多bean的时候配置会显得比较繁锁</p>
+<p>所以spring提供了 autowired 机制，从而必须定义每一个bean</p>
+<p>目前有以下几种方式实现autowired:</p>
+<ol>
+<li><p>autowired byName, 这种方式在 service 中必须实现需要inject的成员变量的setter方法,<br>并bean 中配置的bean name 必须和成员变量相同</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- autowiring byName, bean name should be same as the property name --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">name</span>=<span class="value">"employeeServiceByName"</span> <span class="attribute">class</span>=<span class="value">"com.walterlife.springtest.service.EmployeeService"</span> <span class="attribute">autowire</span>=<span class="value">"byName"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>autowired byType, 该种方式下同一种 bean type 只能 配置一次</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- autowiring byType, there should be only one bean definition for the mapping --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">name</span>=<span class="value">"employeeServiceByType"</span> <span class="attribute">class</span>=<span class="value">"com.walterlife.springtest.service.EmployeeService"</span> <span class="attribute">autowire</span>=<span class="value">"byType"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>autowired by constructor, 和 byType类似，只是该种方式是通过构造函数进行注入的</p>
+</li>
+<li><p>autowired by @Autowired 注解, 使用该种方式，需要配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Enable Annotation based configuration --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">context:annotation-config</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>@Qualifer, 该注解用来表明@Autowired的参数指定的类型，本身需要带上injected 的bean name</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Autowired</span>(required=<span class="keyword">false</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">EmployeeAutowiredByConstructorService</span><span class="params">(@Qualifier(<span class="string">"employee"</span>)</span> Employee employee) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.employee = employee;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<a id="more"></a>
+<p>下面举例说明以上几种autowired 方式</p>
+<p>项目结构如下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">SpringAutowired/</span><br><span class="line">├── pom.xml</span><br><span class="line">└── src</span><br><span class="line">    └── main</span><br><span class="line">        ├── java</span><br><span class="line">        │   └── com</span><br><span class="line">        │       └── walterlife</span><br><span class="line">        │           └── springtest</span><br><span class="line">        │               ├── App.java</span><br><span class="line">        │               ├── model</span><br><span class="line">        │               │   └── Employee.java</span><br><span class="line">        │               └── service</span><br><span class="line">        │                   ├── EmployeeAutowiredByConstructorService.java</span><br><span class="line">        │                   ├── EmployeeAutowiredByTypeService.java</span><br><span class="line">        │                   └── EmployeeService.java</span><br><span class="line">        └── resources</span><br><span class="line">            └── spring.xml</span><br><span class="line">通过tree -L <span class="number">8</span> -I <span class="string">"target|test"</span> SpringAutowired  命令生成</span><br></pre></td></tr></table></figure></p>
+<p>maven 依赖如下,在pom.xml添加<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependencies</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">version</span>&gt;</span>4.11<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="title">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="title">scope</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Spring and Transactions --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-context<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">version</span>&gt;</span>$&#123;spring-framework.version&#125;<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>spring-tx<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">version</span>&gt;</span>$&#123;spring-framework.version&#125;<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Logging with SLF4J &amp; LogBack --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>slf4j-api<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">version</span>&gt;</span>$&#123;slf4j.version&#125;<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="title">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>ch.qos.logback<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>logback-classic<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">version</span>&gt;</span>$&#123;logback.version&#125;<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">scope</span>&gt;</span>runtime<span class="tag">&lt;/<span class="title">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>添加 Model Bean Class,在bean configuration 中进行初始化<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Employee.java</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Employee</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@return</span> the name</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@param</span> name the name to set</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>创建service class, 用于通过autowired 注入 bean<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">EmployeeService.java</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EmployeeService</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Employee employee;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">EmployeeService</span><span class="params">(Employee employee)</span> </span>&#123;</span><br><span class="line">        System.out.printf(<span class="string">"%s\n"</span>, <span class="string">"Autowiring by constructer used!!!"</span>);</span><br><span class="line">        <span class="keyword">this</span>.employee = employee;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">EmployeeService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.printf(<span class="string">"%s\n"</span>, <span class="string">"Default constructer invoked!!!"</span>);</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@return</span> the employee</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Employee <span class="title">getEmployee</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> employee;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@param</span> employee the employee to set</span><br><span class="line">     */</span></span><br><span class="line">    <span class="comment">// 类中包含该函数，可以使用Autowired byName</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEmployee</span><span class="params">(Employee employee)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.employee = employee;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>该 service 可以用于 autowired by type, name, constructor<br>byType, byName 是通过 setter 方法来注入的，而 byConstructor 是通过constructor 方法注入的</p>
+<p>当使用 byType, byName是通过默认构造函数实例化对象的,所以代码中显式的定义了默认构造函数</p>
+<p>@Autowired bean autowiring byType<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.springtest.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> com.walterlife.springtest.model.Employee;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EmployeeAutowiredByTypeService</span> </span>&#123;</span><br><span class="line">    <span class="annotation">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> Employee employee;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@return</span> the employee</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Employee <span class="title">getEmployee</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> employee;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@param</span> employee the employee to set</span><br><span class="line">     */</span></span><br><span class="line">    <span class="annotation">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEmployee</span><span class="params">(Employee employee)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.employee = employee;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2015/09/05/java-design-pattern-composite/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2015/08/25/java-design-pattern-observer/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2015/09/01/Spring-Autowired-By-type-name-constructor-Autowired-and-Qualifer-注解例子/" data-title="Spring Autowired By type,name,constructor,Autowired and Qualifer 注解例子" data-url="http://yoursite.com/2015/09/01/Spring-Autowired-By-type-name-constructor-Autowired-and-Qualifer-注解例子/"></div>  
+  
+</section>
+
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	Sep 1 2015 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/code/">code<span>1</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/java/">java<span>2</span></a></li> <li><a href="/tags/spring/">spring<span>2</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2015 Walter
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'walterlife' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

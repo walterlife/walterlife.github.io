@@ -1,0 +1,324 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>linux 上 maven+nexus 构建环境搭建 | Walter&#39;s Blog</title>
+  <meta name="author" content="Walter">
+  
+  <meta name="description" content="做一个文雅的程序员">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="linux 上 maven+nexus 构建环境搭建"/>
+  <meta property="og:site_name" content="Walter&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?null";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Walter&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="所有文章归档">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="所有文档分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="所有文档标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">		
+			<h1> linux 上 maven+nexus 构建环境搭建</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+			
+
+	<!-- content -->
+	<div class="mypage">		
+	    <h4 id="安装mvn">安装mvn</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install maven2</span><br></pre></td></tr></table></figure>
+<h4 id="安装_nexus_搭建_maven2_私服">安装 nexus 搭建 maven2 私服</h4><ul>
+<li>下载 nexus, 官网地址 <a href="http://nexus.sonatype.org/" target="_blank" rel="external">http://nexus.sonatype.org/</a> , 我的360网盘地址: <a href="http://yunpan.cn/ccxjgqeQx8qjp" target="_blank" rel="external">http://yunpan.cn/ccxjgqeQx8qjp</a>, 分享中包括 离线 maven index 文件 后面会用到, 解压 nexus</li>
+<li>将indexer-cli-5.1.1.jar nexus-maven-repository-index.gz nexus-maven-repository-index.properties 放在同一目录下，执行<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar indexer-cli-<span class="number">5.1</span>.<span class="number">1</span>.jar -u nexus-maven-repository-index.gz <span class="operator">-d</span> indexer</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/img/index.png" alt=""></p>
+<a id="more"></a>
+<ul>
+<li><p>将 indexer 中的所有文件移至 nexus/sonatype-work/nexus/indexer/central-ctx/下<br><img src="/img/cpindex.png" alt=""></p>
+</li>
+<li><p>启动 nexus 服务 ./nexus start 即可<br><img src="/img/nexusstart.png" alt=""></p>
+</li>
+<li><p>浏览器打开 localhost:8081/nexus 如果是终端 localhost 改为 ip地址即可</p>
+</li>
+<li>初始账号 admin:admin123</li>
+<li><p>修改 central 中的 Download Remote Indexes 改为 true<br><img src="/img/nexusconfig.png" alt=""></p>
+</li>
+<li><p>可以自己上传本地 jar，如果从远程下载速度慢，可以先自己下载再上传，下载网址[个人认为该网址比较齐全] <a href="http://mvnrepository.com/" target="_blank" rel="external">http://mvnrepository.com/</a><br><img src="/img/3rdupload.jpg" alt=""></p>
+</li>
+</ul>
+<h4 id="修改_/etc/maven2/settings-xml,_修改之前最好_备份_文件,_添加_私服mirrors,">修改 /etc/maven2/settings.xml, 修改之前最好 备份 文件, 添加 私服mirrors,</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;mirrors&gt;</span><br><span class="line">  &lt;!-- 设置 mirror --&gt;</span><br><span class="line">  &lt;mirror&gt;</span><br><span class="line">    &lt;id&gt;central&lt;/id&gt;</span><br><span class="line">    &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</span><br><span class="line">    &lt;name&gt;Human Readable Name <span class="keyword">for</span> this Mirror.&lt;/name&gt;</span><br><span class="line">    &lt;url&gt;http://yourip:<span class="number">8081</span>/nexus/content/groups/public&lt;/url&gt;</span><br><span class="line">  &lt;/mirror&gt; </span><br><span class="line">&lt;/mirrors&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 添加 profile --&gt;</span><br><span class="line">&lt;profile&gt;</span><br><span class="line">    &lt;id&gt;nexus&lt;/id&gt;</span><br><span class="line">    &lt;repositories&gt;</span><br><span class="line">        &lt;repository&gt;</span><br><span class="line">            &lt;id&gt;nexus&lt;/id&gt;</span><br><span class="line">            &lt;name&gt;Nexus&lt;/name&gt;</span><br><span class="line">            &lt;url&gt;http://yourip:<span class="number">8081</span>/nexus/content/groups/public&lt;/url&gt;</span><br><span class="line">            &lt;releases&gt;</span><br><span class="line">                &lt;enabled&gt;<span class="literal">true</span>&lt;/enabled&gt;</span><br><span class="line">            &lt;/releases&gt;</span><br><span class="line">            &lt;snapshots&gt;</span><br><span class="line">                &lt;enabled&gt;<span class="literal">true</span>&lt;/enabled&gt;</span><br><span class="line">            &lt;/snapshots&gt;</span><br><span class="line">        &lt;/repository&gt;</span><br><span class="line">    &lt;/repositories&gt;</span><br><span class="line">&lt;/profile&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 激活 profie --&gt;</span><br><span class="line">&lt;activeProfiles&gt;</span><br><span class="line">    &lt;activeProfile&gt;nexus&lt;/activeProfile&gt;</span><br><span class="line">&lt;/activeProfiles&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="创建项目">创建项目</h4><ul>
+<li><p>使用如下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果卡在下载 archetype-catalog 则 使用如下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn archetype:generate -DarchetypeCatalog=internal -DgroupId=com.mycompany.app -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改pom.xml 文件，添加 dependences, plugins 等</p>
+</li>
+<li>相关命令(摘抄自maven 官方文档)</li>
+</ul>
+<ul>
+<li>validate: validate the project is correct and all necessary information is available</li>
+<li>compile: compile the source code of the project</li>
+<li>test: test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed</li>
+<li>package: take the compiled code and package it in its distributable format, such as a JAR.</li>
+<li>integration-test: process and deploy the package if necessary into an environment where integration tests can be run</li>
+<li>verify: run any checks to verify the package is valid and meets quality criteria</li>
+<li>install: install the package into the local repository, for use as a dependency in other projects locally</li>
+<li>deploy: done in an integration or release environment, copies the final package to the remote repository for sharing with other developers and projects.</li>
+<li>clean: cleans up artifacts created by prior builds</li>
+<li>site: generates site documentation for this project</li>
+</ul>
+<h4 id="创建_jar_包">创建 jar 包</h4><ul>
+<li>mvn clean package </li>
+<li>mvn clean compile</li>
+<li>mvn clean install</li>
+</ul>
+<h4 id="添加_plugins">添加 plugins</h4><p>在 pom.xml 中增加 <build><plugins><plugin> 标签 [在跟标签project下]<br>如添加 maven-shade-plugin, 主要在jar包写入Manifest信息(用法参考 <a href="https://maven.apache.org/plugins/maven-shade-plugin/examples/resource-transformers.html" target="_blank" rel="external">https://maven.apache.org/plugins/maven-shade-plugin/examples/resource-transformers.html</a>)</plugin></plugins></build></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;build&#62;&#10;  &#60;plugins&#62;&#10;      &#60;plugin&#62;  &#10;          &#60;groupId&#62;org.apache.maven.plugins&#60;/groupId&#62;  &#10;          &#60;artifactId&#62;maven-shade-plugin&#60;/artifactId&#62;  &#10;          &#60;version&#62;1.2.1&#60;/version&#62;  &#10;          &#60;executions&#62;  &#10;              &#60;execution&#62;  &#10;                  &#60;phase&#62;package&#60;/phase&#62;  &#10;                  &#60;goals&#62;  &#10;                      &#60;goal&#62;shade&#60;/goal&#62;  &#10;                  &#60;/goals&#62;  &#10;                  &#60;configuration&#62;  &#10;                      &#60;transformers&#62;  &#10;                          &#60;!-- Setting Manifest Entries --&#62; &#10;                          &#60;transformer implementation=&#34;org.apache.maven.plugins.shade.resource.ManifestResourceTransformer&#34;&#62;            &#10;                              &#60;mainClass&#62;com.mycompany.app.App&#60;/mainClass&#62;  &#10;                          &#60;/transformer&#62;  &#10;                      &#60;/transformers&#62;  &#10;                  &#60;/configuration&#62;  &#10;              &#60;/execution&#62;  &#10;          &#60;/executions&#62;  &#10;      &#60;/plugin&#62;  &#10;  &#60;/plugins&#62;&#10;&#60;/build&#62;</span><br></pre></td></tr></table></figure>
+<h4 id="执行_jar">执行 jar</h4><ul>
+<li>java -jar target/my-app-1.0-SNAPSHOT.jar [前提是增加了 maven-shade-plugin]</li>
+<li>java -cp target/my-app-1.0-SNAPSHOT.jar com.walterlife.common.App com.mycompany.app</li>
+</ul>
+<h4 id="更改maven_编译时使用的jdk_版本">更改maven 编译时使用的jdk 版本</h4><ul>
+<li>在 pom.xml 添加如下配置[<build><plugins>节点下]<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;plugin&#62;&#10;    &#60;groupId&#62;org.apache.maven.plugins&#60;/groupId&#62;&#10;    &#60;artifactId&#62;maven-compiler-plugin&#60;/artifactId&#62;&#10;    &#60;version&#62;3.1&#60;/version&#62;&#10;    &#60;configuration&#62;&#10;        &#60;source&#62;1.8&#60;/source&#62;&#10;        &#60;target&#62;1.8&#60;/target&#62;&#10;        &#60;compilerArgument&#62;&#60;/compilerArgument&#62;&#10;    &#60;/configuration&#62;&#10;&#60;/plugin&#62;</span><br></pre></td></tr></table></figure>
+</plugins></build></li>
+</ul>
+<h4 id="参考文章">参考文章</h4><ul>
+<li><a href="http://www.cnblogs.com/dcba1112/archive/2011/05/01/2033805.html" target="_blank" rel="external">http://www.cnblogs.com/dcba1112/archive/2011/05/01/2033805.html</a></li>
+<li><a href="https://maven.apache.org/guides/" target="_blank" rel="external">https://maven.apache.org/guides/</a></li>
+<li><a href="https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html" target="_blank" rel="external">Manifest File理解</a></li>
+</ul>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2015/06/23/java-fresher-dev-suggests/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2015/06/10/libary-method-and-syscall-method-difference/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2015/06/12/linux-maven-nexus-dev-build/" data-title="linux 上 maven+nexus 构建环境搭建" data-url="http://yoursite.com/2015/06/12/linux-maven-nexus-dev-build/"></div>  
+  
+</section>
+
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	Jun 12 2015 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/tools/">tools<span>2</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/linux/">linux<span>2</span></a></li> <li><a href="/tags/maven/">maven<span>2</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2015 Walter
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'walterlife' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

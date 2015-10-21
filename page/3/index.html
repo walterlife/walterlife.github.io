@@ -1,0 +1,653 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 3 页 | Walter&#39;s Blog</title>
+  <meta name="author" content="Walter">
+  
+  <meta name="description" content="做一个文雅的程序员">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Walter&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?null";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Walter&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="所有文章归档">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="所有文档分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="所有文档标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 <div class="page-header">
+  <h1>一切因想像而美好</h1>
+</div>
+
+<div class="row page">
+
+	
+	<div class="col-md-9">
+	
+
+		<div class="slogan">
+      <i class="fa fa-heart"></i>
+      Welcome.
+</div>    
+
+		<div class="mypage">
+		
+		<!-- title and entry -->
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jul 12 2015 </div>
+			<div class="article-title"><a href="/2015/07/12/core-java-interview-and-answer/" >核心Java面试题解答</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <h2 id="声明">声明</h2><p>本文翻译自: <a href="http://www.roytuts.com/core-java-interview-questions-and-answers/">http://www.roytuts.com/core-java-interview-questions-and-answers/</a></p>
+<h2 id="1-_java_thread对象可以掉用start_方法两次吗">1. java thread对象可以掉用start 方法两次吗</h2><ol>
+<li>不可以，当连续调用start方法时，会抛出一个异常 – java.lang.IllegalThreadStateException</li>
+<li>参考下面例子</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.blog;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadInvokeStartTwice</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">            System.out.print(<span class="string">"Thread runing"</span> + Thread.activeCount());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ThreadInvokeStartTwice thread = <span class="keyword">new</span> ThreadInvokeStartTwice();</span><br><span class="line">        thread.start();</span><br><span class="line">        thread.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// output</span></span><br><span class="line">    Thread runing2Exception in thread <span class="string">"main"</span> java.lang.IllegalThreadStateException</span><br><span class="line">    at java.lang.Thread.start(Unknown Source)</span><br><span class="line">at com.walterlife.blog.ThreadInvokeStartTwice.main(ThreadInvokeStartTwice.java:<span class="number">14</span>)</span><br></pre></td></tr></table></figure>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/07/12/core-java-interview-and-answer/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jul 8 2015 </div>
+			<div class="article-title"><a href="/2015/07/08/java-design-pattern-adapter/" >Java设计模式学习之适配器模式</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <p>适配器模式是结构型模式中的一种，他经常用于将两个没有联系的接口进行适配，使之可以结合使用。其中联合不相关接口的对象就是成为适配器。</p>
+<p>就拿现实生活中的手机充电器举例子，我们就可以把手机充电器当做适配器，因为一般的插座电源都是220V的，但是手机电池是3V的，手机充电器就在手机电源和一般插座之间充当适配器的作用。</p>
+<p>现在我们就拿这个例子来使用java实现适配器模式。</p>
+<p>首先，我们实现两个类，Volt 和 Socket 类</p>
+<p>Volt.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.dp.AdapterDP;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.Level;</span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.Logger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Volt</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> volts;</span><br><span class="line">    <span class="keyword">static</span> Logger logger = Logger.getLogger(Volt.class);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Volt</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.volts = v;</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setVolts</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.volts = v;</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getVolts</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.volts;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/07/08/java-design-pattern-adapter/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jul 8 2015 </div>
+			<div class="article-title"><a href="/2015/07/08/java-design-pattern-builder/" >Java设计模式学习之生成器模式</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <p>生成器模式是创造型模式的一种, 和工厂模式，抽象工厂莫斯类似。该模式是为了解决该类问题：当工厂模式或抽象工厂模式中的对象包含很对属性时</p>
+<p>之所以出现该种模式，主要因为工厂模式和抽象工厂模式存在以下问题</p>
+<ol>
+<li>当创建的对象需要的参数很多时，客户端程序很难保证参数顺序的正确性</li>
+<li>参数中有些对于个别对象是并不是必须的，但是工厂模式中必须传入工厂中所有对象的属性，如果不是必须的，也需要传入null</li>
+<li>针对上述情况，获取我们可以针对不对的对象生成不同属性的setter 函数，当此时工厂中的对象的状态是不一致的</li>
+</ol>
+<p>生成器模式就很好的解决了上述问题</p>
+<p>针对每种对象的属性不一致的问题，生成器模式是这样解决的：在生成对象时，使用step-by-step的方式去设置需要对象的属性,最后再返回创建好的对象</p>
+<p>还是以在工厂模式中的Computer类为例子</p>
+<p>首先我们在 Computer 内部实现一个 ComputerBuilder 公有的静态内部类，将客户端参数全部到该内部类的属性中，类名最好是类名+Builder来命名</p>
+<p>该内部类对外提供构造函数，一系列setter 函数，用来设置optional parameters,并且这些setter函数都返回 Builder类本身</p>
+<p>在全部设置完参数后，再调用build 函数来返回创造好的对象，该函数一般可以调用生成对象的私有构造函数<br>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/07/08/java-design-pattern-builder/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jul 7 2015 </div>
+			<div class="article-title"><a href="/2015/07/07/java-design-pattern-abstract-factory/" >Java设计模式学习之抽象工厂模式</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <p>抽象工厂模式是创造型模式的一种，他和工厂模式类似，可以看作是工厂的工厂</p>
+<p>工厂模式中使用一堆 if-else结构来返回客户端要的子类实例。抽象工厂模式不是用if-else，而是使用不同子类的工厂代理来返回子类实例</p>
+<p>下面例子对之前工厂模式进行适当的修改,增加生成PC的PCFactory, 生成Server的ServerFactory<br>,以及修改ComputerFactory</p>
+<p>PCFactory.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.dp.FactoryDP;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PCFactory</span> <span class="keyword">implements</span> <span class="title">ComputerAbstractFactory</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String ram;</span><br><span class="line">    <span class="keyword">private</span> String hdd;</span><br><span class="line">    <span class="keyword">private</span> String cpu;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PCFactory</span><span class="params">(String ram, String hdd, String cpu)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.ram = ram;</span><br><span class="line">        <span class="keyword">this</span>.hdd = hdd;</span><br><span class="line">        <span class="keyword">this</span>.cpu = cpu;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Computer <span class="title">createComputer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PC(ram, hdd, cpu);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ServerFactory.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.dp.FactoryDP;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerFactory</span> <span class="keyword">implements</span> <span class="title">ComputerAbstractFactory</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String ram;</span><br><span class="line">    <span class="keyword">private</span> String hdd;</span><br><span class="line">    <span class="keyword">private</span> String cpu;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ServerFactory</span><span class="params">(String ram, String hdd, String cpu)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.ram = ram;</span><br><span class="line">        <span class="keyword">this</span>.hdd = hdd;</span><br><span class="line">        <span class="keyword">this</span>.cpu = cpu;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Computer <span class="title">createComputer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Server(ram, hdd, cpu);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/07/07/java-design-pattern-abstract-factory/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jul 6 2015 </div>
+			<div class="article-title"><a href="/2015/07/06/java-design-pattern-factory/" >Java设计模式学习之工厂模式</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <p>工厂模式是创造型模式的一种，在java框架如Spring,struts2被广泛运用</p>
+<p>该模式运用于：当程序中有一父类和一堆子类，子类的创建是根据输入的不同返回不同的子类<br>实例。此时只要实现一个工厂类负责不同子类的返回，代替客户端程序来返回实例。</p>
+<p>下面例子使用Computer的类来说明工厂模式的实现机制</p>
+<h2 id="超类">超类</h2><p>Computer.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.dp.FactoryDP;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Computer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getRam</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getHdd</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getCpu</span><span class="params">()</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"RAM: "</span> + getRam() </span><br><span class="line">            + <span class="string">" HDD: "</span> + getHdd()</span><br><span class="line">            + <span class="string">" CPU: "</span> + getCpu();</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/07/06/java-design-pattern-factory/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jul 6 2015 </div>
+			<div class="article-title"><a href="/2015/07/06/java-design-pattern-summory/" >Java设计模式学习之概述篇</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <h2 id="设计模式_Overview">设计模式 Overview</h2><p>目前在现代语言开发中，设计模式是非常流行的,因为通常一种设计模式可以解决一种常见的开发问题。</p>
+<p>如果你使用设计模式，你可以获得以下好处:</p>
+<ol>
+<li>设计模式已经是由前人经验总结好的， 其解决方法是通过标准实践测试过的，因此这可以帮你节省很多时间</li>
+<li>设计模式是可复用的，这大大提升了软件的鲁棒性和可维护性</li>
+<li>同时设计模式是面向对象，通俗易懂的，这样可以任务交接团队间交流时省去很多时间</li>
+</ol>
+<p>设计模式总体上可以分为3大类:</p>
+<ol>
+<li>创造型模式</li>
+<li>结构型模式</li>
+<li>行为型模式</li>
+</ol>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/07/06/java-design-pattern-summory/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jul 5 2015 </div>
+			<div class="article-title"><a href="/2015/07/05/java-design-pattern-singleton/" >Java设计模式学习之单例模式</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <p>单例模式，从定义上看起来很简单，但是在实现上是富有争议的, 他严格规定了对象实例化的个数,而且保证在运行期间，JVM只存在一个实例。</p>
+<p>在实现上，程序必须提供接口去访问该唯一实例。在运用上，单例模式可以运用在 logging, driver objects, caching 和 thread pool</p>
+<p>在其他模式的实现中，也运用了单例模式，比如抽象工厂模式，生成器模式，原型模式，门面模式等。在java标准库中，java.lang.Runtime, java.awt.Desktop也运用了单例模式。</p>
+<p>下面介绍常用的单例实现方法，和其使用方法</p>
+<p>首先，所有的实现方法必须遵循以下几个原则：</p>
+<ol>
+<li>私有构造函数，保证该类不能从其他类中进行实例化</li>
+<li>私有静态类实例，保证该类只有一份实例</li>
+<li>共有的静态函数，返回该类的唯一的实例变量，这也是唯一一个外界获取该类实力对象的方法</li>
+</ol>
+<h3 id="饿汉实现方式">饿汉实现方式</h3><p>该种实现方式中，类实例是当类加载时就创建了，这种方式也是最简单的，但是这个缺点，就是该实例并不是在使用的时候才创建<br>下面是该种方式的实现代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.designparttern;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton instance = <span class="keyword">new</span> Singleton();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果程序中你不使用什么资源，该种方式是一种好的选择。但是在大部分场景中，单例中都会包含资源了，比如database connections, file handler. etc.<br>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/07/05/java-design-pattern-singleton/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jun 28 2015 </div>
+			<div class="article-title"><a href="/2015/06/28/java-collection-class-diagram/" >java collection 接口和类层级图</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <h2 id="说明">说明</h2><p>本文翻译自 <a href="http://www.programcreek.com/2009/02/the-interface-and-class-hierarchy-for-collections/">http://www.programcreek.com/2009/02/the-interface-and-class-hierarchy-for-collections/</a></p>
+<h2 id="collection_与_collections的区别">collection 与 collections的区别</h2><ul>
+<li>首先collection 与 collections 是两个不同的概念。就如下图所示，collection 类是collection层级的根接口类，而collections 则是提供了一系列操作 一些 collection 类型的静态方法<br><img src="/img/CollectionVsCollections.jpeg" alt="collection 与 collections 区别"></li>
+</ul>
+<h2 id="collection_类的层级关系">collection 类的层级关系</h2><p>下图阐述了collection 类的层级关系<br><img src="/img/java-collection-hierarchy.jpeg" alt=""></p>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/06/28/java-collection-class-diagram/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jun 28 2015 </div>
+			<div class="article-title"><a href="/2015/06/28/bash-use-summary/" >bash使用小结</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <h2 id="说明">说明</h2><p>以下记录是平时工作中bash 相关使用的点滴记录，会持续更新</p>
+<h2 id="bash_中使用数组">bash 中使用数组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sites=(&#34;www.a.com www.b.com www.c.com www.d.com&#34; &#34;www.e.cn www.f.cn&#34;)   &#10;n_sites=$&#123;#sites[*]&#125; #&#33719;&#21462;&#19968;&#32500;sites&#30340;&#25968;&#32452;&#38271;&#24230;   &#10;for ((i=0;i&#60;$n_sites;i++))&#10;do   &#10;    inner_sites=($&#123;sites[$i]&#125;) #&#23558;&#19968;&#32500;sites&#23383;&#31526;&#20018;&#36171;&#20540;&#21040;&#25968;&#32452;   &#10;    n_inner_sites=$&#123;#inner_sites[*]&#125; #&#33719;&#21462;&#20108;&#32500;sites&#30340;&#25968;&#32452;&#38271;&#24230;   &#10;    for ((j=0;j&#60;$n_inner_sites;j++));   &#10;    do       &#10;        echo $&#123;inner_sites[$j]&#125; #&#22238;&#26174;site   &#10;    done   &#10;done</span><br></pre></td></tr></table></figure>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/06/28/bash-use-summary/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jun 27 2015 </div>
+			<div class="article-title"><a href="/2015/06/27/java-execute-order/" >Java程序的执行顺序</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <h2 id="java_程序的执行程序">java 程序的执行程序</h2><ul>
+<li>静态语句块最先被执行</li>
+<li>正常语句</li>
+<li>执行块语句</li>
+<li>执行构造函数[先父类再子类]</li>
+<li>如果有父类，则先按照顺序执行父类</li>
+</ul>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/06/27/java-execute-order/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+
+		</div>
+
+		<!-- pagination -->
+		<div>
+  		<center>
+		<div class="pagination">
+<ul class="pagination">
+	 
+		
+    	<li class="prev"><a href="/page/2/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i> 上一页</a></li>
+  		
+
+        <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+
+		
+		   <li class="next"> <a href="/page/4/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a> </li>          
+        
+	
+</ul>
+</div>
+
+  		</center>
+		</div>
+
+		
+		
+	</div> <!-- col-md-9 -->
+
+	
+		<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div class="form-group has-success has-feedback">
+    <form class="site-search-form">
+        <input type="text" id="st-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control" />
+    </form>
+  </div>  
+
+
+
+		
+			
+	<div class="widget">
+		<h4>分类</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/categories/code/">code<span>1</span></a></li>
+		
+			<li><a href="/categories/cpp/">cpp<span>2</span></a></li>
+		
+			<li><a href="/categories/db/">db<span>1</span></a></li>
+		
+			<li><a href="/categories/java/">java<span>20</span></a></li>
+		
+			<li><a href="/categories/summary/">summary<span>7</span></a></li>
+		
+			<li><a href="/categories/tools/">tools<span>2</span></a></li>
+		
+		</ul>
+	</div>
+
+		
+			
+	<div class="widget">
+		<h4>标签云</h4>
+		<ul class="tag_box inline list-unstyled">		
+		
+			<li><a href="/tags/netty/">netty<span>1</span></a></li>
+		
+			<li><a href="/tags/java-concurrent/">java-concurrent<span>1</span></a></li>
+		
+			<li><a href="/tags/java/">java<span>2</span></a></li>
+		
+			<li><a href="/tags/bash/">bash<span>1</span></a></li>
+		
+			<li><a href="/tags/mongodb/">mongodb<span>1</span></a></li>
+		
+			<li><a href="/tags/core-java/">core-java<span>6</span></a></li>
+		
+			<li><a href="/tags/maven/">maven<span>2</span></a></li>
+		
+			<li><a href="/tags/servlet/">servlet<span>1</span></a></li>
+		
+			<li><a href="/tags/cpp/">cpp<span>2</span></a></li>
+		
+			<li><a href="/tags/interview/">interview<span>3</span></a></li>
+		
+			<li><a href="/tags/linux/">linux<span>2</span></a></li>
+		
+			<li><a href="/tags/spring/">spring<span>2</span></a></li>
+		
+			<li><a href="/tags/work/">work<span>1</span></a></li>
+		
+			<li><a href="/tags/design-pattern/">design-pattern<span>13</span></a></li>
+		
+			<li><a href="/tags/java-core/">java-core<span>2</span></a></li>
+		
+			<li><a href="/tags/struts2/">struts2<span>1</span></a></li>
+		
+		 
+		</ul>
+	</div>
+
+
+		
+			
+<div class="widget">
+  <h4>最新文章</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2015/10/21/maven-use-summary/" ><i class="fa fa-file-o"></i>maven_use_summary...</a>
+      </li>
+    
+      <li>
+        <a href="/2015/09/13/netty-server-learn/" ><i class="fa fa-file-o"></i>菜鸟学习系列--netty服务器启动流程分析...</a>
+      </li>
+    
+      <li>
+        <a href="/2015/09/12/java-blocking-queue-learn/" ><i class="fa fa-file-o"></i>java-blocking-queue-learn...</a>
+      </li>
+    
+      <li>
+        <a href="/2015/09/11/java-volatile-keyword-learn/" ><i class="fa fa-file-o"></i>java-volatile-keyword-learn...</a>
+      </li>
+    
+      <li>
+        <a href="/2015/09/11/java-concurrency-multithreading-learn/" ><i class="fa fa-file-o"></i>Java并发编程学习...</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>链接</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class=""></i><a href="https://github.com/wzpan/freemind/" title="Freemind's Github repository." target="_blank"]);">Freemind</a></li>
+	
+		<li><i class=""></i><a href="http://www.github.com/walterlife" title="My Github account." target="_blank"]);">Github</a></li>
+	
+		<li><i class=""></i><a href="http://www.zhihu.com/people/walterlife" title="My zhihu account." target="_blank"]);">知乎</a></li>
+	
+		<li><i class=""></i><a href="http://book.douban.com/people/walterlife/" title="My douban account." target="_blank"]);">豆瓣</a></li>
+	
+	</ul>
+</div>
+
+
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
+
+	
+	
+</div> <!-- row-fluid -->
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2015 Walter
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'walterlife' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

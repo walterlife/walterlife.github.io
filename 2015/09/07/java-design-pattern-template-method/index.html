@@ -1,0 +1,271 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Java设计模式之模板方法模式 | Walter&#39;s Blog</title>
+  <meta name="author" content="Walter">
+  
+  <meta name="description" content="做一个文雅的程序员">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Java设计模式之模板方法模式"/>
+  <meta property="og:site_name" content="Walter&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?null";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Walter&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="所有文章归档">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="所有文档分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="所有文档标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">		
+			<h1> Java设计模式之模板方法模式</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+			
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>模板方法模式是行为型模式中一种，他通常只需实现一个根方法即可，该方法规定了各个方法的执行顺序。这些方法中可以是各个子类共有的，也可以是每个子类不一样的，该模板方法是父类独有的，一般可以定义为final，可以防止子类进行重写</p>
+<p>现在我们以造房子为例子，一般造房子都是以规定的顺序开工的，先打地基，再搭骨架，然后砌墙，最后上玻璃。其中地基是不同房子基本都是一样的，骨架有的可以是木头的，有的可以是砖块的，有的是玻璃，墙也是同样的。这里我们以玻璃房和木头房举例子，这两个子类都继承房子的基类(HouseTemplate),他们的buildPillars 和 buildWalls 方法是不同的，但是他们的建造顺序都是一样的，在HouseTemplate中的buildHouse中实现</p>
+<p>其中为了父类中的模板方法不被子类重写，我们把该方法定义为 final 方法</p>
+<h2 id="Template_Method_Abstract_Class">Template Method Abstract Class</h2><p>因为父类中有点方法是不需要实现的，模板方法又必须实现的，故将该类定义为 abstract class</p>
+<p>HouseTemplate.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.dp.TemplateMethodDP;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.Logger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">HouseTemplate</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Logger logger = Logger.getLogger(HouseTemplate.class);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// template method, order is fioxed</span></span><br><span class="line">    <span class="comment">// final so subclasses can not override it</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">buildHouse</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        buildFoudation();</span><br><span class="line">        buildPillers();</span><br><span class="line">        buildWalls();</span><br><span class="line">        buildWindows();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildWindows</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        logger.info(<span class="string">"HouseTemplate build windows!!!"</span>);</span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildWalls</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildPillers</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildFoudation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        logger.info(<span class="string">"HouseTemplate build foudation!!!"</span>);</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>buildHouse() 是模板方法，该方法定义了建造房子固定的顺序</p>
+<h2 id="Template_Method_Concrete_Classes">Template Method Concrete Classes</h2><p>这里我们只以 木头房和 玻璃房为例</p>
+<p>WoodenHouse.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.dp.TemplateMethodDP;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.Logger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WoodenHouse</span> <span class="keyword">extends</span> <span class="title">HouseTemplate</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Logger logger = Logger.getLogger(HouseTemplate.class);</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildWalls</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">        logger.info(<span class="string">"build house with wooden walls!!!"</span>);        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildPillers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">        logger.info(<span class="string">"build house with wooden pills!!!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>GlassHouse.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.dp.TemplateMethodDP;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.Logger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GlassHouse</span> <span class="keyword">extends</span> <span class="title">HouseTemplate</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Logger logger = Logger.getLogger(HouseTemplate.class);</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildWalls</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">        logger.info(<span class="string">"build house with glass walls!!!"</span>);        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildPillers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">        logger.info(<span class="string">"build house with glass pills!!!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Test_Method">Test Method</h2><p>现在开始测试我们刚刚实现的模板方法模式 代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testTemplateMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    HouseTemplate house = <span class="keyword">new</span> WoodenHouse();</span><br><span class="line">    house.buildHouse();</span><br><span class="line">    logger.info(<span class="string">"================================"</span>);</span><br><span class="line"></span><br><span class="line">    house = <span class="keyword">new</span> GlassHouse();</span><br><span class="line">    house.buildHouse();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2015</span>-<span class="number">09</span>-<span class="number">07</span> <span class="number">22</span>:<span class="number">43</span>:<span class="number">28</span> INFO  com.walterlife.dp.TemplateMethodDP.HouseTemplate buildFoudation:<span class="number">27</span> -&gt; HouseTemplate build foudation!!!</span><br><span class="line"><span class="number">2015</span>-<span class="number">09</span>-<span class="number">07</span> <span class="number">22</span>:<span class="number">43</span>:<span class="number">28</span> INFO  com.walterlife.dp.TemplateMethodDP.WoodenHouse buildPillers:<span class="number">18</span> -&gt; build house with wooden pills!!!</span><br><span class="line"><span class="number">2015</span>-<span class="number">09</span>-<span class="number">07</span> <span class="number">22</span>:<span class="number">43</span>:<span class="number">28</span> INFO  com.walterlife.dp.TemplateMethodDP.WoodenHouse buildWalls:<span class="number">12</span> -&gt; build house with wooden walls!!!</span><br><span class="line"><span class="number">2015</span>-<span class="number">09</span>-<span class="number">07</span> <span class="number">22</span>:<span class="number">43</span>:<span class="number">28</span> INFO  com.walterlife.dp.TemplateMethodDP.HouseTemplate buildWindows:<span class="number">19</span> -&gt; HouseTemplate build windows!!!</span><br><span class="line"><span class="number">2015</span>-<span class="number">09</span>-<span class="number">07</span> <span class="number">22</span>:<span class="number">43</span>:<span class="number">28</span> INFO  com.walterlife.dp.App testTemplateMethod:<span class="number">24</span> -&gt; ================================</span><br><span class="line"><span class="number">2015</span>-<span class="number">09</span>-<span class="number">07</span> <span class="number">22</span>:<span class="number">43</span>:<span class="number">28</span> INFO  com.walterlife.dp.TemplateMethodDP.HouseTemplate buildFoudation:<span class="number">27</span> -&gt; HouseTemplate build foudation!!!</span><br><span class="line"><span class="number">2015</span>-<span class="number">09</span>-<span class="number">07</span> <span class="number">22</span>:<span class="number">43</span>:<span class="number">28</span> INFO  com.walterlife.dp.TemplateMethodDP.GlassHouse buildPillers:<span class="number">18</span> -&gt; build house with glass pills!!!</span><br><span class="line"><span class="number">2015</span>-<span class="number">09</span>-<span class="number">07</span> <span class="number">22</span>:<span class="number">43</span>:<span class="number">28</span> INFO  com.walterlife.dp.TemplateMethodDP.GlassHouse buildWalls:<span class="number">12</span> -&gt; build house with glass walls!!!</span><br><span class="line"><span class="number">2015</span>-<span class="number">09</span>-<span class="number">07</span> <span class="number">22</span>:<span class="number">43</span>:<span class="number">28</span> INFO  com.walterlife.dp.TemplateMethodDP.HouseTemplate buildWindows:<span class="number">19</span> -&gt; HouseTemplate build windows!!!</span><br></pre></td></tr></table></figure></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2015/09/07/java-design-pattern-mediator/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2015/09/06/java-design-pattern-proxy/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2015/09/07/java-design-pattern-template-method/" data-title="Java设计模式之模板方法模式" data-url="http://yoursite.com/2015/09/07/java-design-pattern-template-method/"></div>  
+  
+</section>
+
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	Sep 7 2015 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/java/">java<span>20</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/design-pattern/">design-pattern<span>13</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2015 Walter
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'walterlife' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

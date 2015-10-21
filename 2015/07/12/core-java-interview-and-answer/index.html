@@ -1,0 +1,393 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>核心Java面试题解答 | Walter&#39;s Blog</title>
+  <meta name="author" content="Walter">
+  
+  <meta name="description" content="做一个文雅的程序员">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="核心Java面试题解答"/>
+  <meta property="og:site_name" content="Walter&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?null";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Walter&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="所有文章归档">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="所有文档分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="所有文档标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">		
+			<h1> 核心Java面试题解答</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+			
+
+	<!-- content -->
+	<div class="mypage">		
+	    <h2 id="声明">声明</h2><p>本文翻译自: <a href="http://www.roytuts.com/core-java-interview-questions-and-answers/" target="_blank" rel="external">http://www.roytuts.com/core-java-interview-questions-and-answers/</a></p>
+<h2 id="1-_java_thread对象可以掉用start_方法两次吗">1. java thread对象可以掉用start 方法两次吗</h2><ol>
+<li>不可以，当连续调用start方法时，会抛出一个异常 – java.lang.IllegalThreadStateException</li>
+<li>参考下面例子</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.blog;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadInvokeStartTwice</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">            System.out.print(<span class="string">"Thread runing"</span> + Thread.activeCount());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ThreadInvokeStartTwice thread = <span class="keyword">new</span> ThreadInvokeStartTwice();</span><br><span class="line">        thread.start();</span><br><span class="line">        thread.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// output</span></span><br><span class="line">    Thread runing2Exception in thread <span class="string">"main"</span> java.lang.IllegalThreadStateException</span><br><span class="line">    at java.lang.Thread.start(Unknown Source)</span><br><span class="line">at com.walterlife.blog.ThreadInvokeStartTwice.main(ThreadInvokeStartTwice.java:<span class="number">14</span>)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="2-_collection_与_collections_的区别">2. collection 与 collections 的区别</h2><h3 id="collection">collection</h3><ol>
+<li>这是个接口. 一个 collection 包含了一组对象，这些对象有的collection 允许是重复的[List]，有的允许不能重复的[Set],<br>有的是有序的[插入顺序和在collection中的位置是一致的，而不是排序过的],有的是无序的。</li>
+<li>JDK中并没有直接的实现该接口，而是提过了一些子接口[List, Set]等</li>
+<li><a href="http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html" target="_blank" rel="external">http://docs.oracle.com/javase/6/docs/api/java/util/Collection.html</a> 可以阅读更多相关信息</li>
+</ol>
+<h3 id="collections">collections</h3><ul>
+<li>这是个类，该类包含了许多静态函数，用来处理或者返回collection 类。</li>
+<li>同时包含了很多有用的函数，比如sort, addAll, copy 等[个人觉得该类和c++ 中 STL中的algorithm.h类似]</li>
+</ul>
+<h2 id="3-_ArrayList_怎么定位一个元素">3. ArrayList 怎么定位一个元素</h2><ul>
+<li>ArrayList 中的 indexOf 和 contains 是大小写敏感的</li>
+</ul>
+<h2 id="例子">例子</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.walterlife.blog;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InsensitiveSearch</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; searchColl;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">InsensitiveSearch</span><span class="params">(List search)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.searchColl = search;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (String s : searchColl) &#123;</span><br><span class="line">            <span class="keyword">if</span> (str.equalsIgnoreCase(s)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">indexOf</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> index = <span class="number">0</span>; index &lt; searchColl.size(); index++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (str.equalsIgnoreCase(searchColl.get(index))) &#123;</span><br><span class="line">                <span class="keyword">return</span> index;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SearchInArrayList</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list.add(<span class="string">"A"</span>);</span><br><span class="line">        list.add(<span class="string">"B"</span>);</span><br><span class="line">        list.add(<span class="string">"C"</span>);</span><br><span class="line">        list.add(<span class="string">"D"</span>);</span><br><span class="line">        list.add(<span class="string">"E"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">boolean</span> found = list.contains(<span class="string">"a"</span>);</span><br><span class="line">        System.out.println(<span class="string">"element a : "</span> + (found ? <span class="string">"found"</span> : <span class="string">"not found"</span>));</span><br><span class="line"></span><br><span class="line">        found = list.contains(<span class="string">"B"</span>);</span><br><span class="line">        System.out.println(<span class="string">"element B : "</span> + (found ? <span class="string">"found"</span> : <span class="string">"not found"</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> index = list.indexOf(<span class="string">"c"</span>);</span><br><span class="line">        System.out.println(<span class="string">"element c : "</span> + (index &lt;= <span class="number">0</span> ? <span class="string">"not found"</span> : <span class="string">"found"</span>));</span><br><span class="line"></span><br><span class="line">        index = list.indexOf(<span class="string">"C"</span>);</span><br><span class="line">        System.out.println(<span class="string">"element C : "</span> + (index &lt;= <span class="number">0</span> ? <span class="string">"not found"</span> : <span class="string">"found"</span>));</span><br><span class="line"></span><br><span class="line">        InsensitiveSearch test = <span class="keyword">new</span> InsensitiveSearch(list);</span><br><span class="line"></span><br><span class="line">        found = test.contains(<span class="string">"a"</span>);</span><br><span class="line">        System.out.println(<span class="string">"element  : "</span> + (found ? <span class="string">"found"</span> : <span class="string">"not found"</span>));</span><br><span class="line"></span><br><span class="line">        found = test.contains(<span class="string">"B"</span>);</span><br><span class="line">        System.out.println(<span class="string">"element B : "</span> + (found ? <span class="string">"found"</span> : <span class="string">"not found"</span>));</span><br><span class="line"></span><br><span class="line">        found = test.contains(<span class="string">"c"</span>);</span><br><span class="line">        System.out.println(<span class="string">"element c : "</span> + (found ? <span class="string">"found"</span> : <span class="string">"not found"</span>));</span><br><span class="line"></span><br><span class="line">        found = test.contains(<span class="string">"C"</span>);</span><br><span class="line">        System.out.println(<span class="string">"element C : "</span> + (found ? <span class="string">"found"</span> : <span class="string">"not found"</span>));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="输出">输出</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">element a : not found</span><br><span class="line">element B : found</span><br><span class="line">element c : not found</span><br><span class="line">element C : found</span><br><span class="line">element a : found</span><br><span class="line">element B : found</span><br><span class="line">element c : found</span><br><span class="line">element C : found</span><br></pre></td></tr></table></figure>
+<h2 id="4-_String,_StringBuffer,_StringBuilder_的区别">4. String, StringBuffer, StringBuilder 的区别</h2><h3 id="String">String</h3><ul>
+<li>String 是一个不可变的类，一旦创建，其值就不能被改变</li>
+<li>String 是线程安全的，因为他是不可变的，多线程不可能同时修改其值</li>
+<li>String 对象的内存是存储在常量池</li>
+<li>如果对同一个String 对象重复赋值，则重新赋值前对象的引用将找不到了，但是其内存不能被马上释放掉</li>
+</ul>
+<h3 id="StringBuffer">StringBuffer</h3><ul>
+<li>StringBuffer 是可变的，其值是可以改变的</li>
+<li>StringBuffer 是线程安全的，其内部实现了同步访问元素的方法，所以多线程是可以同时访问的，但是在一个cpu时间片内值允许一个线程访问[CPU是串行的]</li>
+<li>因为其实线程安全的[锁机制],故其在性能上不及StringBuffer</li>
+<li>StringBuffer 对象的内存是存储在heap上</li>
+<li>可以通过toString 将值转为String </li>
+</ul>
+<h3 id="StringBuilder">StringBuilder</h3><ul>
+<li>StringBuilder 是可变的，其值是可以改变的 </li>
+<li>StringBuffer 是线程不安全的，其内部没有实现同步访问元素的方法，所以多线程是不可以同时访问的</li>
+<li>因为其实线程不安全的,故其在性能上比StringBuffer 更快</li>
+<li>StringBuffer 对象的内存是存储在heap上</li>
+<li>可以通过toString 将值转为String</li>
+</ul>
+<h3 id="例子-1">例子</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.roytuts.java.string;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringStringBufferStringBuilder</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String s = <span class="string">"Hello, World!"</span>;</span><br><span class="line">        System.out.println(s);</span><br><span class="line">        s = <span class="string">"Welcome to Hello World!"</span>;</span><br><span class="line">        System.out.println(s); <span class="comment">// we lost reference to "Hello, World!"</span></span><br><span class="line">        System.out.println();</span><br><span class="line"></span><br><span class="line">        StringBuffer stringBuffer = <span class="keyword">new</span> StringBuffer(<span class="string">"Hello, World!"</span>);</span><br><span class="line">        System.out.println(stringBuffer);</span><br><span class="line">        System.out.println(stringBuffer.toString()); <span class="comment">// convert to String object</span></span><br><span class="line">        stringBuffer = <span class="keyword">new</span> StringBuffer(<span class="string">"Welcome to Hello World!"</span>);</span><br><span class="line">        System.out.println(stringBuffer);</span><br><span class="line">        System.out.println();</span><br><span class="line"></span><br><span class="line">        StringBuilder stringBuilder = <span class="keyword">new</span> StringBuilder(<span class="string">"Hello, World!"</span>);</span><br><span class="line">        System.out.println(stringBuilder);</span><br><span class="line">        System.out.println(stringBuilder.toString()); <span class="comment">// convert to String</span></span><br><span class="line">                                                        <span class="comment">// object</span></span><br><span class="line">        stringBuilder = <span class="keyword">new</span> StringBuilder(<span class="string">"Welcome to Hello World!"</span>);</span><br><span class="line">        System.out.println(stringBuilder);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="输出-1">输出</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Hello, World!</span><br><span class="line">Welcome to Hello World!</span><br><span class="line"></span><br><span class="line">Hello, World!</span><br><span class="line">Hello, World!</span><br><span class="line">Welcome to Hello World!</span><br><span class="line"></span><br><span class="line">Hello, World!</span><br><span class="line">Hello, World!</span><br><span class="line">Welcome to Hello World!</span><br></pre></td></tr></table></figure>
+<h2 id="5-_ClassNotFoundException_和_NoClassDefinitionFoundException的区别">5. ClassNotFoundException 和 NoClassDefinitionFoundException的区别</h2><h3 id="ClassNotFoundException">ClassNotFoundException</h3><ul>
+<li>抛出异常的情况: 当应用程序通过类名来加载类的时候,使用的方法如下:</li>
+</ul>
+<ul>
+<li>forName 在 Class 类中</li>
+<li>findSystemClass 在 ClassLoader 类中</li>
+<li>loadClass 在 ClassLoader 类中</li>
+</ul>
+<ul>
+<li>如果应用程序没有定义指定类名的类时，就会抛出该异常</li>
+<li>当使用反射机制来调用该类相关接口时，而该类区不存在时，也会抛出ClassNotFoundException 异常</li>
+<li>另外该异常是checked 异常，故在程序中要捕获该异常或者抛出</li>
+<li>例子</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.roytuts.classexception;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassNotFoundExceptionTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class.forName(<span class="string">"ClassA"</span>); <span class="comment">// ClassA 没有定义</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">    java.lang.ClassNotFoundException: ClassA</span><br><span class="line">    at java.net.URLClassLoader$<span class="number">1</span>.run(Unknown Source)</span><br><span class="line">    at java.net.URLClassLoader$<span class="number">1</span>.run(Unknown Source)</span><br><span class="line">    at java.security.AccessController.doPrivileged(Native Method)</span><br><span class="line">    at java.net.URLClassLoader.findClass(Unknown Source)</span><br><span class="line">    at java.lang.ClassLoader.loadClass(Unknown Source)</span><br><span class="line">    at sun.misc.Launcher$AppClassLoader.loadClass(Unknown Source)</span><br><span class="line">    at java.lang.ClassLoader.loadClass(Unknown Source)</span><br><span class="line">    at java.lang.Class.forName0(Native Method)</span><br><span class="line">    at java.lang.Class.forName(Unknown Source)</span><br><span class="line">at CoreJavaLearn.ClassNotFoundExceptionTest.main(ClassNotFoundExceptionTest.java:<span class="number">8</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="NoClassDefinitionFoundException">NoClassDefinitionFoundException</h3><ul>
+<li>当在jvm中，或者使用ClassLoader实例来加载雷时，但是该类的定义却不存在，此时会抛出该异常</li>
+<li>而在编译期间，要加载的类的类定义是存在的</li>
+<li>所以只有在代码成功编译了，但是在部署时没有将需要的jar‘文件全部包含，才会抛出此异常</li>
+<li>例子</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.jms.ConnectionFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.activemq.ActiveMQConnection;</span><br><span class="line"><span class="keyword">import</span> org.apache.activemq.ActiveMQConnectionFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NoClassDefinitionFoundExceptionTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ConnectionFactory connectionFactory = <span class="keyword">new</span> ActiveMQConnectionFactory(</span><br><span class="line">                ActiveMQConnection.DEFAULT_BROKER_URL);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"> </span><br><span class="line">+ 输出</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">Exception in thread <span class="string">"main"</span> java.lang.Error: Unresolved compilation problems: </span><br><span class="line">ConnectionFactory cannot be resolved to a type</span><br><span class="line">ActiveMQConnectionFactory cannot be resolved to a type</span><br><span class="line">ActiveMQConnection cannot be resolved to a variable</span><br><span class="line">at com.roytuts.classexception.NoClassDefinitionFoundExceptionTest.main(NoClassDefinitionFoundExceptionTest.java.11</span><br></pre></td></tr></table></figure>
+<h2 id="6-_什么是class_loaders">6. 什么是class loaders</h2><ul>
+<li>参考 <a href="http://www.oracle.com/technetwork/articles/javase/classloaders-140370.html" target="_blank" rel="external">http://www.oracle.com/technetwork/articles/javase/classloaders-140370.html</a></li>
+</ul>
+<h2 id="7-_当异常处理完后，异常对象内存什么时候回收">7. 当异常处理完后，异常对象内存什么时候回收</h2><ul>
+<li>会在下一次垃圾回收时回收掉</li>
+</ul>
+<h2 id="8-_equals_与_hashCode_的联系">8. equals 与 hashCode 的联系</h2><ul>
+<li>当 object 类重写了equals 时，就必须同时重写 hashCode </li>
+<li>当两个对象 hashcode相同时，并不代表两个对象的值就一定相等</li>
+<li>所以在设计hashCode方法时，我们有必要保证两个不同的对象的hashCode 也不同，这样可以提升hash tables的性能[查找性能]</li>
+<li>要保证每次调用hashCode 的值是相同的</li>
+<li>个人认为这个可以参考c++ 中 hashtable 内部实现机制来理解</li>
+</ul>
+<h2 id="9-_使用_HashMap_需要注意什么?">9. 使用 HashMap 需要注意什么?</h2><ul>
+<li>HashMap 不允许key值重复，但是value值可以重复</li>
+<li>key值和value 值都可以为 null</li>
+</ul>
+<h2 id="10-_列出_Object_类中常用的方法">10. 列出 Object 类中常用的方法</h2><ul>
+<li>getClass() – 返回运行时对象的类型</li>
+<li>hashCode() – 返回对象的hash值</li>
+<li>equals() – 辨明对象是否和其他对象相等</li>
+<li>clone() – 返回对象的副本</li>
+<li>toString() – 将对象的值转为字符串</li>
+<li>notify() – 唤醒在某个正在等待某个资源可用的线程</li>
+<li>notifyAll() – 唤醒在所有正在等待某个资源可用的线程</li>
+<li>wait() – 使当前线程处于Waiting 状态，直到另外一个线程调用 notify 或者 notifyAll 来唤醒该线程，或者该线程被另外一个线程中断了，或者运行超时了</li>
+<li>finalize() – 由jvm判定该对象已经没有任何引用后回收时调用</li>
+</ul>
+<h2 id="11-_可以重写_static_方法吗?">11. 可以重写 static 方法吗?</h2><ul>
+<li>参考 <a href="http://docs.oracle.com/javase/tutorial/java/IandI/override.html" target="_blank" rel="external">http://docs.oracle.com/javase/tutorial/java/IandI/override.html</a></li>
+<li>其实是不可以的，子类实现的会隐藏父类的实现</li>
+<li>父类调用被隐藏的static method 还是父类</li>
+</ul>
+<h2 id="12-_怎样防止方法被重写">12. 怎样防止方法被重写</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用final 关键字修饰函数即可</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="keyword">final</span> <span class="title">funcname</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="13-_在接口中可以有_static_方法吗?">13. 在接口中可以有 static 方法吗?</h2><ul>
+<li>java 7 中只允许有 public abstract, java 8允许,且默认是public,必须要实现方法</li>
+<li>参考 <a href="https://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html" target="_blank" rel="external">https://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html</a></li>
+</ul>
+<h2 id="14-_transient_变量">14. transient 变量</h2><ul>
+<li>在序列化是不能被序列化[当然可以使用自定义序列化方法来序列化],即不是可持久化变量</li>
+<li>可以用在某些不需要持久化的变量</li>
+<li>参考  <a href="http://www.roytuts.com/java-transient-modifier/" target="_blank" rel="external">http://www.roytuts.com/java-transient-modifier/</a></li>
+</ul>
+<h2 id="15-_抽象类和抽象方法的区别">15. 抽象类和抽象方法的区别</h2><ul>
+<li>抽象类不能实例化，在类名前有 abstract 关键字修饰</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">abstract</span> <span class="title">AbstractClass</span></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>抽象方法不需要实现，方法名前有 abstract 修饰</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">AbstractMethod</span><span class="params">()</span></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>抽象可以不需要包含抽象方法</li>
+</ul>
+<h2 id="16-_Boolean_的_默认值">16. Boolean 的 默认值</h2><ul>
+<li>false</li>
+</ul>
+<h2 id="ArrayList_和_LinkedList_的区别和使用">ArrayList 和 LinkedList 的区别和使用</h2><ul>
+<li>参考 <a href="http://www.roytuts.com/arraylist-vs-linkedlist-in-java/" target="_blank" rel="external">http://www.roytuts.com/arraylist-vs-linkedlist-in-java/</a></li>
+<li>个人认为可以以c++中 list 和 vector 的区别作为参考</li>
+</ul>
+<h2 id="17-_java中每个线程都有独立的栈区域吗">17. java中每个线程都有独立的栈区域吗</h2><ul>
+<li>是的，这是运行时栈，但共享同一块内存域</li>
+</ul>
+<h2 id="18-_java获取当前时间时间戳">18. java获取当前时间时间戳</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.currentTimeMills()   <span class="comment">//可用于性能测试中</span></span><br></pre></td></tr></table></figure>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2015/07/16/java-spring-di-method/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2015/07/08/java-design-pattern-adapter/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2015/07/12/core-java-interview-and-answer/" data-title="核心Java面试题解答" data-url="http://yoursite.com/2015/07/12/core-java-interview-and-answer/"></div>  
+  
+</section>
+
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	Jul 12 2015 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/java/">java<span>20</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/core-java/">core-java<span>6</span></a></li> <li><a href="/tags/interview/">interview<span>3</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2015 Walter
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'walterlife' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

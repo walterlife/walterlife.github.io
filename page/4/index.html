@@ -1,0 +1,500 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 4 页 | Walter&#39;s Blog</title>
+  <meta name="author" content="Walter">
+  
+  <meta name="description" content="做一个文雅的程序员">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Walter&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?null";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Walter&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="所有文章归档">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="所有文档分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="所有文档标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 <div class="page-header">
+  <h1>一切因想像而美好</h1>
+</div>
+
+<div class="row page">
+
+	
+	<div class="col-md-9">
+	
+
+		<div class="slogan">
+      <i class="fa fa-heart"></i>
+      Welcome.
+</div>    
+
+		<div class="mypage">
+		
+		<!-- title and entry -->
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jun 23 2015 </div>
+			<div class="article-title"><a href="/2015/06/23/java-fresher-dev-suggests/" >给java初学者的开发建议</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <h3 id="说明">说明</h3><p>该文章翻译自<br><a href="http://www.javacodegeeks.com/2015/06/java-programming-tips-best-practices-beginners.html">http://www.javacodegeeks.com/2015/06/java-programming-tips-best-practices-beginners.html</a><br>只翻译了常用的，本人也是java初学者，中间也有自己的理解如有翻译不妥，欢迎纠正</p>
+<h3 id="返回空的集合而不是_null">返回空的集合而不是 null</h3><p>当你设计的函数返回一个集合时，请确保当集合没有元素时返回一个空的集合，而不是null，这样可以节省 if-else 的判断</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">getLocationName</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">null</span>==cityName ? <span class="string">""</span>: cityName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/06/23/java-fresher-dev-suggests/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jun 12 2015 </div>
+			<div class="article-title"><a href="/2015/06/12/linux-maven-nexus-dev-build/" >linux 上 maven+nexus 构建环境搭建</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <h4 id="安装mvn">安装mvn</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install maven2</span><br></pre></td></tr></table></figure>
+<h4 id="安装_nexus_搭建_maven2_私服">安装 nexus 搭建 maven2 私服</h4><ul>
+<li>下载 nexus, 官网地址 <a href="http://nexus.sonatype.org/">http://nexus.sonatype.org/</a> , 我的360网盘地址: <a href="http://yunpan.cn/ccxjgqeQx8qjp">http://yunpan.cn/ccxjgqeQx8qjp</a>, 分享中包括 离线 maven index 文件 后面会用到, 解压 nexus</li>
+<li>将indexer-cli-5.1.1.jar nexus-maven-repository-index.gz nexus-maven-repository-index.properties 放在同一目录下，执行<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar indexer-cli-<span class="number">5.1</span>.<span class="number">1</span>.jar -u nexus-maven-repository-index.gz <span class="operator">-d</span> indexer</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/img/index.png" alt=""></p>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/06/12/linux-maven-nexus-dev-build/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jun 10 2015 </div>
+			<div class="article-title"><a href="/2015/06/10/libary-method-and-syscall-method-difference/" >库函数与系统调用的区别</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <h3 id="系统调用和库函数的关系">系统调用和库函数的关系</h3><ul>
+<li>系统调用通过软中断int 0x80从用户态进入内核态。 函数库中的某些函数调用了系统调用。 </li>
+<li>函数库中的函数可以没有调用系统调用，也可以调用多个系统调用。 编程人员可以通过函数库调用系统调用。 </li>
+<li>高级编程也可以直接采用int 0x80进入系统调用，而不必通过函数库作为中介。 如果是在核心编程，也可以通过int 0x80进入系统调用，此时不能使用函数库。因为函数库中的函数是内核访问不到的.</li>
+</ul>
+<ul>
+<li>从用户调用库函数到系统调用执行的流程。 </li>
+</ul>
+<ul>
+<li>假设用户调用ssize_t write (int fields, cont void *buff, size_t nbytes);库函数。</li>
+<li>库函数会执行int 0x80中断。因为中断使得进程从用户态进入内核态，所以参数通过寄存器传送。 </li>
+<li>0x80中断对应的中断例程被称为system call handler。</li>
+</ul>
+<ul>
+<li>其工作是：</li>
+<li>存储大多数寄存器到内核堆栈中。这是汇编代码写的。 </li>
+<li>执行真正的系统调用函数――system call service routine。这是C代码。</li>
+<li>通过ret_from_sys_call ()返回，回到用户态的库函数。这是汇编代码。</li>
+</ul>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/06/10/libary-method-and-syscall-method-difference/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> Jun 10 2015 </div>
+			<div class="article-title"><a href="/2015/06/10/one-c-code-for-learning-assembly/" >一段简单c程序的汇编语言学习(ubuntu+x86)</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <p>####<br>c程序代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>  </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span>  </span><br><span class="line"></span>&#123;  </span><br><span class="line">    <span class="keyword">int</span> i=<span class="number">0</span>, j=<span class="number">0</span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">8</span>; i++)  </span><br><span class="line">        j=j+<span class="number">1</span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/06/10/one-c-code-for-learning-assembly/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> May 24 2015 </div>
+			<div class="article-title"><a href="/2015/05/24/mongodb-learn-record/" >MongoDb学习记录</a></div>						
+		</h3>
+	
+
+
+			<div class="entry">
+  <div class="row">
+  
+	<div class="col-md-12">
+	  
+	
+	  <h2 id="创建数据库">创建数据库</h2><ul>
+<li>use db_name</li>
+<li>show dbs 多少数据库</li>
+<li>db 显示当前数据名</li>
+<li>db.dropDatabase()  删除当前所在数据库</li>
+</ul>
+<h2 id="创建数据表">创建数据表</h2><ul>
+<li>db.createCollection(‘tb_name’)</li>
+<li>show collections 查看当前数据库的数据表</li>
+</ul>
+<h2 id="重命名文档名称">重命名文档名称</h2><ul>
+<li>db.tb_name.renameCollection(‘new_tb_name’)</li>
+</ul>
+	
+	</div>
+	
+  
+</div>
+	<a type="button" href="/2015/05/24/mongodb-learn-record/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+		
+
+		</div>
+
+		<!-- pagination -->
+		<div>
+  		<center>
+		<div class="pagination">
+<ul class="pagination">
+	 
+		
+    	<li class="prev"><a href="/page/3/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i> 上一页</a></li>
+  		
+
+        <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+
+		
+          <li class="next disabled"><a>下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>
+        
+	
+</ul>
+</div>
+
+  		</center>
+		</div>
+
+		
+		
+	</div> <!-- col-md-9 -->
+
+	
+		<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div class="form-group has-success has-feedback">
+    <form class="site-search-form">
+        <input type="text" id="st-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control" />
+    </form>
+  </div>  
+
+
+
+		
+			
+	<div class="widget">
+		<h4>分类</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/categories/code/">code<span>1</span></a></li>
+		
+			<li><a href="/categories/cpp/">cpp<span>2</span></a></li>
+		
+			<li><a href="/categories/db/">db<span>1</span></a></li>
+		
+			<li><a href="/categories/java/">java<span>20</span></a></li>
+		
+			<li><a href="/categories/summary/">summary<span>7</span></a></li>
+		
+			<li><a href="/categories/tools/">tools<span>2</span></a></li>
+		
+		</ul>
+	</div>
+
+		
+			
+	<div class="widget">
+		<h4>标签云</h4>
+		<ul class="tag_box inline list-unstyled">		
+		
+			<li><a href="/tags/struts2/">struts2<span>1</span></a></li>
+		
+			<li><a href="/tags/servlet/">servlet<span>1</span></a></li>
+		
+			<li><a href="/tags/core-java/">core-java<span>6</span></a></li>
+		
+			<li><a href="/tags/cpp/">cpp<span>2</span></a></li>
+		
+			<li><a href="/tags/bash/">bash<span>1</span></a></li>
+		
+			<li><a href="/tags/work/">work<span>1</span></a></li>
+		
+			<li><a href="/tags/java-concurrent/">java-concurrent<span>1</span></a></li>
+		
+			<li><a href="/tags/linux/">linux<span>2</span></a></li>
+		
+			<li><a href="/tags/java/">java<span>2</span></a></li>
+		
+			<li><a href="/tags/maven/">maven<span>2</span></a></li>
+		
+			<li><a href="/tags/spring/">spring<span>2</span></a></li>
+		
+			<li><a href="/tags/java-core/">java-core<span>2</span></a></li>
+		
+			<li><a href="/tags/netty/">netty<span>1</span></a></li>
+		
+			<li><a href="/tags/design-pattern/">design-pattern<span>13</span></a></li>
+		
+			<li><a href="/tags/mongodb/">mongodb<span>1</span></a></li>
+		
+			<li><a href="/tags/interview/">interview<span>3</span></a></li>
+		
+		 
+		</ul>
+	</div>
+
+
+		
+			
+<div class="widget">
+  <h4>最新文章</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2015/10/21/maven-use-summary/" ><i class="fa fa-file-o"></i>maven_use_summary...</a>
+      </li>
+    
+      <li>
+        <a href="/2015/09/13/netty-server-learn/" ><i class="fa fa-file-o"></i>菜鸟学习系列--netty服务器启动流程分析...</a>
+      </li>
+    
+      <li>
+        <a href="/2015/09/12/java-blocking-queue-learn/" ><i class="fa fa-file-o"></i>java-blocking-queue-learn...</a>
+      </li>
+    
+      <li>
+        <a href="/2015/09/11/java-volatile-keyword-learn/" ><i class="fa fa-file-o"></i>java-volatile-keyword-learn...</a>
+      </li>
+    
+      <li>
+        <a href="/2015/09/11/java-concurrency-multithreading-learn/" ><i class="fa fa-file-o"></i>Java并发编程学习...</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>链接</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class=""></i><a href="https://github.com/wzpan/freemind/" title="Freemind's Github repository." target="_blank"]);">Freemind</a></li>
+	
+		<li><i class=""></i><a href="http://www.github.com/walterlife" title="My Github account." target="_blank"]);">Github</a></li>
+	
+		<li><i class=""></i><a href="http://www.zhihu.com/people/walterlife" title="My zhihu account." target="_blank"]);">知乎</a></li>
+	
+		<li><i class=""></i><a href="http://book.douban.com/people/walterlife/" title="My douban account." target="_blank"]);">豆瓣</a></li>
+	
+	</ul>
+</div>
+
+
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
+
+	
+	
+</div> <!-- row-fluid -->
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2015 Walter
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'walterlife' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>

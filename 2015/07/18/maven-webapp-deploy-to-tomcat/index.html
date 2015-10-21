@@ -1,0 +1,298 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>maven webapp 项目部署至tomcat | Walter&#39;s Blog</title>
+  <meta name="author" content="Walter">
+  
+  <meta name="description" content="做一个文雅的程序员">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="maven webapp 项目部署至tomcat"/>
+  <meta property="og:site_name" content="Walter&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?null";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Walter&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="所有文章归档">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="所有文档分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="所有文档标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">		
+			<h1> maven webapp 项目部署至tomcat</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+			
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>在本文中，我们使用Apache Tomcat Maven plugin，将maven webapp 项目的war 文件自动部署至 Apache Tomcat下,作者的环境如下:</p>
+<ul>
+<li>Apache Maven 2.1.1</li>
+<li>Apache Tomcat Maven Plugin</li>
+<li>JDK 1.7</li>
+<li>Apache Tomcat 7</li>
+<li>OS: Debian 7</li>
+</ul>
+<h2 id="1-_在_Tomcat_中创建用户">1. 在 Tomcat 中创建用户</h2><ul>
+<li>在 {tomcat installed path}/conf/tomcat-users.xml 中配置如下信息<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">tomcat-users</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">role</span> <span class="attribute">rolename</span>=<span class="value">"manager"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">role</span> <span class="attribute">rolename</span>=<span class="value">"admin"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">role</span> <span class="attribute">rolename</span>=<span class="value">"manager-gui"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">role</span> <span class="attribute">rolename</span>=<span class="value">"manager-script"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">user</span> <span class="attribute">username</span>=<span class="value">"admin"</span> <span class="attribute">password</span>=<span class="value">"admin"</span> <span class="attribute">roles</span>=<span class="value">"admin, manager, manager-gui, manager-script"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">tomcat-users</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="2-_在_Maven_中创建用户">2. 在 Maven 中创建用户</h2><ul>
+<li>在 /etc/conf/maven/setting.xml[linux环境] 中配置如下信息<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">server</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">id</span>&gt;</span>tomcat<span class="tag">&lt;/<span class="title">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">username</span>&gt;</span>admin<span class="tag">&lt;/<span class="title">username</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">password</span>&gt;</span>admin<span class="tag">&lt;/<span class="title">password</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">server</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="3-_在项目_pom-xml_配置插件依赖">3. 在项目 pom.xml 配置插件依赖</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.codehaus.mojo<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>tomcat-maven-plugin<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.1<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">url</span>&gt;</span>http://localhost:8080/manager/text<span class="tag">&lt;/<span class="title">url</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">server</span>&gt;</span>tomcat<span class="tag">&lt;/<span class="title">server</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">path</span>&gt;</span>/StrutsExample<span class="tag">&lt;/<span class="title">path</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>下面是作者的pom.xml 以供参考<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">project</span> <span class="attribute">xmlns</span>=<span class="value">"http://maven.apache.org/POM/4.0.0"</span> <span class="attribute">xmlns:xsi</span>=<span class="value">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">    <span class="attribute">xsi:schemaLocation</span>=<span class="value">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="title">modelVersion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>com.walterlife.blog<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>StrutsExample<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">packaging</span>&gt;</span>war<span class="tag">&lt;/<span class="title">packaging</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">name</span>&gt;</span>StrutsExample Maven Webapp<span class="tag">&lt;/<span class="title">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">url</span>&gt;</span>http://maven.apache.org<span class="tag">&lt;/<span class="title">url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">version</span>&gt;</span>3.8.1<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="title">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">finalName</span>&gt;</span>StrutsExample<span class="tag">&lt;/<span class="title">finalName</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">plugins</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="title">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.codehaus.mojo<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>tomcat-maven-plugin<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.1<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">url</span>&gt;</span>http://localhost:8080/manager/text<span class="tag">&lt;/<span class="title">url</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">server</span>&gt;</span>tomcat<span class="tag">&lt;/<span class="title">server</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="title">path</span>&gt;</span>$&#123;finalName&#125;<span class="tag">&lt;/<span class="title">path</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                <span class="tag">&lt;/<span class="title">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="title">plugin</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="title">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="title">version</span>&gt;</span>3.1<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="title">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">build</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="4-_部署项目至tomcat">4. 部署项目至tomcat</h2><ul>
+<li><p>启动 tomcat,切到tomcat的安装目录下 的 bin目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./startup.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译maven webapp 项目并部署</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean package tomcat:deploy</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="5-_最终结果">5. 最终结果</h2><ul>
+<li><p>tomcat 部署结果<br><img src="/img/tomcat.png" alt=""></p>
+</li>
+<li><p>项目运行结果<br><img src="/img/StrutsExample.png" alt=""></p>
+</li>
+</ul>
+<h2 id="说明">说明</h2><ul>
+<li>本文翻译自 <a href="http://examples.javacodegeeks.com/enterprise-java/maven/how-to-deploy-maven-based-war-file-to-tomcat-example/" target="_blank" rel="external">http://examples.javacodegeeks.com/enterprise-java/maven/how-to-deploy-maven-based-war-file-to-tomcat-example/</a></li>
+</ul>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2015/07/19/java-string-summary/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2015/07/16/java-spring-di-method/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2015/07/18/maven-webapp-deploy-to-tomcat/" data-title="maven webapp 项目部署至tomcat" data-url="http://yoursite.com/2015/07/18/maven-webapp-deploy-to-tomcat/"></div>  
+  
+</section>
+
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	Jul 18 2015 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/tools/">tools<span>2</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/maven/">maven<span>2</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2015 Walter
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'walterlife' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
